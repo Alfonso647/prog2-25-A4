@@ -24,6 +24,11 @@
 * Al hacer la compra se generará la factura/recibo en PDF (Linxi)
 * Habrá una recomendación basada en la consulta de productos (Marcos) 
 * Usar una API para obtener información detallada sobre un producto (Linxi) 
+* Habrá una búsqueda filtrada por atributos que pueda tener un producto, como precio, ofertas, reseñas o el tipo de este (Alfonso)
+* Posibilidad de poner productos a la venta (depende del tipo de usuario en una categoría “nuevo” o “segunda mano”) (Lucía)
+* Antes de iniciar la búsqueda filtrada tendrás la opción de ver los productos más populares (Darío) 
+
+ 
 
  
 
