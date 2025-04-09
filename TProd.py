@@ -1,6 +1,3 @@
-
-
-
 class Producto:
     '''
     Clase que representa un producto

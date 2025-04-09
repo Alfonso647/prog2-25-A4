@@ -2,6 +2,7 @@ from typing import Union
 from TProd import Producto
 from TTienda import Tienda
 
+
 class Carrito:
     '''
     Clase que representa el carrito temporal de compra
