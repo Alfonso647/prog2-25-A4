@@ -1,4 +1,22 @@
+'''
+models.py
+
+Este archivo define la estructura de la base de datos.
+
+Aquí está el modelo "Producto", que representa los productos que se venden en la tienda.
+
+Cada producto tiene:
+- un id (número único)
+- un nombre
+- una descripción
+- un precio
+- una imagen (enlace a una foto)
+
+Usamos SQLAlchemy para que Python pueda trabajar con la base de datos de forma fácil.
+'''
+
 from flask_sqlalchemy import SQLAlchemy
+
 
 db = SQLAlchemy()
 
