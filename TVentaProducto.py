@@ -29,7 +29,7 @@ def poner_producto_en_venta(cliente: Cliente, nombre: str, precio: float, stock:
         Si el producto es frágil. Por defecto es False.
     estado : str, optional
         Indica si el producto es "nuevo" o "segunda mano". Por defecto es "nuevo".
-
+    """
 
     producto = Producto(nombre, precio, stock, volumen, peso, fragil, estado)
     cliente.productos_en_venta.append(producto)
