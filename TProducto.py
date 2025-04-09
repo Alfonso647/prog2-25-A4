@@ -83,7 +83,7 @@ class Producto:
                 cliente.reseñas_realizadas.append(reseña)
             return True
         except ValueError as e:
-            return str(e) #OJO VER ESTO
+            return str(e) 
 
     def mostrar_reseñas(self):
         """
