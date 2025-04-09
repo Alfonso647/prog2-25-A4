@@ -1,5 +1,5 @@
 from typing import Union
-from TProd import Producto
+from TProducto import Producto
 from TTienda import Tienda
 
 
