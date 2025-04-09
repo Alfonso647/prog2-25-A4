@@ -1,4 +1,4 @@
-from TResena import Reseña  # Asegúrate de tener este fichero en tu proyecto
+from TResena import Reseña  
 
 class Producto:
     """
