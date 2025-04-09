@@ -150,9 +150,13 @@ class Cliente(Persona):
 
 
     def mostrar_historial_compras(self):
-        for producto, valor in self.historial_compras.items():
-            print(f'{producto.nombre}, {valor} unidades compradas en total')
 
+        if not self.historial_compras.items():
+            print('No has hecho ninguna compra todavía')
+        else:
+
+            for producto, valor in self.historial_compras.items():
+                print(f'{producto.nombre}, {valor} unidades compradas en total')
 
 
 

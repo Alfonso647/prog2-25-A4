@@ -1,5 +1,7 @@
 from typing import Union
-from TTienda import Tienda, Producto
+from TProd import Producto
+from TTienda import Tienda
+
 
 class Carrito:
     '''
@@ -116,7 +118,7 @@ class Carrito:
     def __str__(self) -> str:
         resultado = f'{self.nombre} \n'
         for producto, cantidad in self.carrito.items():
-            resultado += f"{producto.nombre} : {cantidad} x {producto.precio}€\n"
+            resultado += f'{producto.nombre} : {cantidad} x {producto.precio}€\n'
 
         total, envio = self.calcular_total()
         if self.carrito != False:
