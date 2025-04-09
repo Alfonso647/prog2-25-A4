@@ -1,15 +1,11 @@
 from crypt import methods
-
 from flask import Flask, request
-import hashlib
-
+from flask
 'Datos almecenados de nuestra app'
 users = {}
 data = {}
 app = Flask(__name__)
 
-
-app.config['JWT_SECRET_KEY'] = 'A4'
 
 @app.route("/")
 def root():
