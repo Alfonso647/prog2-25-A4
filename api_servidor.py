@@ -71,7 +71,7 @@ def login():
     data = request.json
     user = data.get('usuario', '')
     password = hashlib.sha256(user.encode()).hexdigest()
-    cliente = Cliente()
+    cliente = TCliente()
     if user in cliente.nombre_usuario() and cliente.password() == password:
         token = create_access_token(identity=user)
         return jsonify(token=token), 200
@@ -118,7 +118,7 @@ def pasar_a_premium():
 @jwt_required()
 def ver_carrito():
     carrito = Carrito()
-    return jsonify(carrito.mostrar()), 200
+    return jsonify(print(carrito)), 200
 
 @app.route('/carrito', methods=['POST'])
 @jwt_required()
