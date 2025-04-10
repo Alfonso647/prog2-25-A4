@@ -28,21 +28,24 @@ Para inicializar la API:
 
 """
 
-#------------------------------------------------------------------------------------------------------#
 import os
 import sqlite3
 import hashlib
 from flask import Flask, request, jsonify
-from flask_jwt_extended import (JWTManager, create_access_token, jwt_required, get_jwt_identity, get_jwt)
+from flask_jwt_extended import (
+    JWTManager, create_access_token, jwt_required,
+    get_jwt_identity, get_jwt
+)
 from fpdf import FPDF
 from datetime import timedelta
 from TTienda import Tienda
 from TCarrito import Carrito
 from TCliente import Cliente
 from TProducto import Producto
-from TAdmin import Administrador   # Suponiendo que exista
-from TFactura import FacturaPDF   # Suponiendo que exista
-users = {} #guardar usuarios
+# from TAdmin import Administrador   # Suponiendo que exista
+# from TFactura import FacturaPDF   # Suponiendo que exista
+# from TTienda import Tienda        # Suponiendo que exista
+users = {}
 
 ACCESS_EXPIRES = timedelta(minutes=30)  # los tokens solo tienen media hora de validez
 

@@ -1,19 +1,17 @@
 from fpdf import FPDF
 from datetime import datetime
-
+#
 class FacturaPDF:
-    def __init__(self,cliente, productos, total, factura_id,filename="factura.pdf"):
+    def __init__(self,cliente, carrito,filename="factura.pdf"):
         self.cliente = cliente
-        self.productos = productos
-        self.total = total
-        self.factura_id = factura_id
+        self.carrito = carrito
         self.fecha = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
         self.filename = filename
         self.pdf = FPDF() #Creamos un objeto FPDF que es el documento donde escribiremos, pero no tiene hoja aún
 
     def generar(self):
         self.pdf.add_page() #Añadimos una hoja para escribir sobre ella
-        self.pdf.set_font("Arial",style="B", size=16) #Definimos la letra, estilo y el tamaño
+        self.pdf.set_font("Arial",style="B", size=16)
 
         #Titulo
         self.pdf.cell(0,10,txt="FACTURA",ln=True,align="C")
@@ -21,7 +19,6 @@ class FacturaPDF:
         #Info de la factura
         self.pdf.set_font("Arial",size=12)
         self.pdf.ln(10)
-        self.pdf.cell(100,10, txt=f"Factura ID: {self.factura_id}")
         self.pdf.cell(0,10,txt=f"Fecha:{self.fecha}", ln=True)
 
         self.pdf.cell(100,10,txt=f"Cliente: {self.cliente}", ln=True)
@@ -35,23 +32,26 @@ class FacturaPDF:
         self.pdf.cell(40, 10, "Subtotal", border=1,ln=True)
 
         #Filas de productos
+        total=0
         self.pdf.set_font("Arial", size=12)
-        for producto in self.productos:
-            nombre=producto["nombre"]
-            cantidad=producto.get("cantidad",1)
-            precio=producto["precio"]
-            subtotal= cantidad*precio
+        for producto in self.carrito:
+            for producto_obj, cantidad in producto.items():
+                nombre=producto_obj.nombre
+                cantidad=cantidad
+                precio=producto_obj.precio
+                subtotal= cantidad*precio
+                total+=subtotal
 
-            self.pdf.cell(80, 10,nombre, border=1)
-            self.pdf.cell(30, 10, str(cantidad), border=1)
-            self.pdf.cell(40, 10, txt=f"${precio:.2f}", border=1)
-            self.pdf.cell(40, 10, txt=f"${subtotal:.2f}", border=1,ln=True)
+                self.pdf.cell(80, 10,nombre, border=1)
+                self.pdf.cell(30, 10, str(cantidad), border=1)
+                self.pdf.cell(40, 10, txt=f"${precio:.2f}", border=1)
+                self.pdf.cell(40, 10, txt=f"${subtotal:.2f}", border=1,ln=True)
 
         #Total
         self.pdf.ln(5)
         self.pdf.set_font("Arial", style="B",size=12)
         self.pdf.cell(150,10,txt="TOTAL:",align="R")
-        self.pdf.cell(40, 10, txt=f"{self.total:.2f}", border=1, ln=True)
+        self.pdf.cell(40, 10, txt=f"{total:.2f}", border=1, ln=True)
 
         #Pie de página
         self.pdf.ln(15)
@@ -61,17 +61,3 @@ class FacturaPDF:
         #Guardar
         self.pdf.output(self.filename)
 
-'''
-#Prueba 
-
-productos =[
-    {"nombre":"Auriculares","precio":30,"cantidad":2},
-    {"nombre": "Teclado", "precio": 45, "cantidad": 1},
-    {"nombre": "Mouse", "precio": 25, "cantidad": 3}
-]
-
-total=sum(producto["precio"]*producto.get("cantidad",1) for producto in productos)
-
-factura=FacturaPDF("Linxi",productos,total,"0001")
-factura.generar()
-'''

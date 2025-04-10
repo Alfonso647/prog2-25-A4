@@ -34,7 +34,8 @@ def test_server():
 
 def leer_producto(producto):
     global token
-    r = requests.get(f'{URL}/producto/{producto}', headers={'Authorization': 'Bearer ' + token})
+    payload={'carrito':carrito}
+    r = requests.post(f'{URL}/factura/', json=payload, headers={'Authorization': 'Bearer ' + token})
     print(r.status_code)
     print(r.text)
 
