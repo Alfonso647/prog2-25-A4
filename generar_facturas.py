@@ -13,7 +13,7 @@ class FacturaPDF:
 
     def generar(self):
         self.pdf.add_page() #Añadimos una hoja para escribir sobre ella
-        self.pdf.set_font("Arial",style="B", size=16) #Definimos la letra, estilo y el tamaño
+        self.pdf.set_font("Arial",style="B", size=16)
 
         #Titulo
         self.pdf.cell(0,10,txt="FACTURA",ln=True,align="C")
