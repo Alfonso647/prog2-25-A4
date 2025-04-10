@@ -38,7 +38,6 @@ from config import JWT_SECRET_KEY
 
 from TCarrito import Carrito
 from TCliente import Cliente, Administrador
-from TCliente import Persona
 from TProd import Producto
 
 ACCESS_EXPIRES = timedelta(hours=0.30)   #los token solo tienen media hora de validez
@@ -108,7 +107,6 @@ def login():
 @jwt_required()
 def añadir_usuario():
     """
-
     Comprubea si eres administrador y añade un nuevo usuario al sistema.
 
     Lee los datos del usuario para comprobar si es administrador (desde la petición
@@ -125,7 +123,7 @@ def añadir_usuario():
 
     usuario = get_jwt_identity()
     user = Administrador()
-    if not isinstance(user.nombre_usuario, Administrador)   ####REVISAR####
+    if not isinstance(user.nombre_usuario, Administrador):   ####REVISAR####
         return f'Solo los adminsitradores pueden realizar crear usuarios', 404
     nombre = request.args.get('nombre')
     apellido1 = request.args.get('apellido1')
@@ -139,7 +137,7 @@ def añadir_usuario():
     #etc
 
 
-@app.route('/carrito', methods=['POST'])   #añadir productos al carrito
+@app.route('/carrito/add', methods=['POST'])   #añadir productos al carrito
 @jwt_required() #solo los usuarios registrados pueden hacerlo
 def añadir_producto_carrito(producto):
     """
@@ -164,7 +162,7 @@ def añadir_producto_carrito(producto):
         return f'Dato {producto} ya incluido en el carrito', 409
 
 
-@app.route('/carrito', methods=['DELETE'])  # añadir productos al carrito
+@app.route('/carrito/delete', methods=['DELETE'])  # elimina productos al carrito
 @jwt_required()  # solo los usuarios registrados pueden hacerlo
 def eliminar_producto_carrito(producto):
     """
@@ -208,28 +206,29 @@ def vaciar_carrito(producto):
 
     """
     carrito = Carrito()
-    if carrito not None:
+    if carrito is not None:
         carrito[] = request.args.get('value', '')
         carrito.vaciar_carrito(producto)
         return f'Dato {producto} añadido al carrito', 200
     else:
         return f'El carrito ya está vacío', 409
 
-@app.route('/data/<id>', methods=['PUT'])    #actualizar datos
-def update_data(id):
-    if id in data:
-        data[id] = request.args.get('value','')
-        return f'Dato {id} actualizado', 200
-    else:
-        return f'dato {id} No encontrado, 404'
+@app.route('/tienda', methods = ['POST'])
+@jwt_required()
+def añadir_producto_tienda():
+    """
+    Añade producto a la tienda.
 
-@app.route('/data/<id>', methods=['DELETE'])  #eliminar datos
-def delete_data(id):
-    if id in data:
-        del data[id]
-        return f'Dato {id} eliminado', 200
+    :return:
+    """
+    tienda = Tienda()
+    producto = Producto
+
+    if producto not in tienda:
+        return producto.guardar(producto, producto.productos_precio, producto.productos_stock), 202
+
     else:
-        return f'Dato {id} no encontrado'
+        return f'El producto ya se encontraba en la tienda', 409
 
 
 if __name__ == '__main__':
