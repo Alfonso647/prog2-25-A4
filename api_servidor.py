@@ -269,8 +269,8 @@ def vaciar_carrito():
 
 #---------------------------------------------------------------------------------------#
 
-@app.route('/producto', methods=['GET'])  #genera factura producto
-def generar_factura_producto(producto):
+@app.route('/producto', methods=['POST'])  #genera factura producto
+def generar_factura_producto():
     """
     Genera una factura del producto. Solo los usuarios que hayan iniciado sesión pueden
     realizar esta acción
@@ -285,7 +285,14 @@ def generar_factura_producto(producto):
     -> Si la factura se ha generado exitosamente: 202
     -> Si no se ha encontrado el producto: 409
     """
-    factura = FacturaPDF()
+
+    user = request.args.get('user', '')
+
+    data = request.get_json()
+    carrito.data.get("carrito")
+
+    factura = FacturaPDF(user,carrito)
+
     try:
         return factura.generar()
     except KeyError:

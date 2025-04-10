@@ -137,7 +137,8 @@ def generar_factura():
     -> Si no se ha podido generar la factura, devuelve el código 409
     """
     global token
-    r = requests.get(f'{URL}/producto/{producto}', headers={'Authorization': 'Bearer ' + token})
+    payload={'carrito':carrito}
+    r = requests.post(f'{URL}/factura/', json=payload, headers={'Authorization': 'Bearer ' + token})
     print(r.status_code)
     print(r.text)
 
