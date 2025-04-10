@@ -36,178 +36,153 @@ from flask_jwt_extended import (
     JWTManager, create_access_token, jwt_required,
     get_jwt_identity, get_jwt
 )
-from fpdf import FPDF
 from datetime import timedelta
+
 from TTienda import Tienda
 from TCarrito import Carrito
 from TCliente import Cliente
-from TProducto import Producto
-# from TAdmin import Administrador   # Suponiendo que exista
-# from TFactura import FacturaPDF   # Suponiendo que exista
-# from TTienda import Tienda        # Suponiendo que exista
-users = {}
+from TProd import Producto
+from generar_facturas import FacturaPDF
 
-ACCESS_EXPIRES = timedelta(minutes=30)  # los tokens solo tienen media hora de validez
+users = {}
+ACCESS_EXPIRES = timedelta(minutes=30)
 
 app = Flask(__name__)
 app.config["JWT_SECRET_KEY"] = 'mi_clave_A4'
 app.config["JWT_ACCESS_TOKEN_EXPIRES"] = ACCESS_EXPIRES
 jwt = JWTManager(app)
 
-#------------------------------------------------------------------------------------------------------#
 @app.route("/")
 def principal():
     return 'API de Productos funcionando correctamente'
 
-#-------------------------------------------------------------------------------------------------------#
 @app.route('/signup', methods=['POST'])
 def signup():
-    user = request.args.get('user', '')
-    password = request.args.get('password', '')
+    data = request.json
+    user = data.get('usuario', '')
     if user in users:
         return f'Usuario {user} ya se encuentra registrado', 409
-    else:
-        hashed = hashlib.sha256(password.encode()).hexdigest()
-        users[user] = hashed
-        return f'Usuario {user} ha sido registrado correctamente', 200
+    hashed = hashlib.sha256(user.encode()).hexdigest()
+    users[user] = hashed
+    return f'Usuario {user} ha sido registrado correctamente', 200
 
-#-------------------------------------------------------------------------------------#
-@app.route('/login', methods=['GET'])
+@app.route('/login', methods=['POST'])
 def login():
-    user = request.args.get('user', '')
-    password = request.args.get('password', '')
-    hashed = hashlib.sha256(password.encode()).hexdigest()
+    data = request.json
+    user = data.get('usuario', '')
+    password = hashlib.sha256(user.encode()).hexdigest()
     cliente = Cliente()
-
-    if user in cliente.nombre_usuario() and cliente.password() == hashed:
+    if user in cliente.nombre_usuario() and cliente.password() == password:
         token = create_access_token(identity=user)
         return jsonify(token=token), 200
-    else:
-        return 'Usuario o contraseña incorrectos', 401
+    return 'Usuario o contraseña incorrectos', 401
 
-#-------------------------------------------------------------------------#
 @jwt.token_in_blocklist_loader
 def comprobar_token(jwt_header, jwt_payload):
     jti = jwt_payload['jti']
-    conn = sqlite3.connect('db.sqlite3')  # Ajusta la ruta a la BD
+    conn = sqlite3.connect('db.sqlite3')
     cursor = conn.cursor()
     cursor.execute("SELECT jti FROM token WHERE jti = ?", (jti,))
     token = cursor.fetchone()
     conn.close()
     return token is not None
 
-#-------------------------------------------------------------------#
 @app.route("/logout", methods=['DELETE'])
 @jwt_required()
 def cerrar_sesion():
     jti = get_jwt()['jti']
     conn = sqlite3.connect('db.sqlite3')
     cursor = conn.cursor()
-    try:
-        cursor.execute("INSERT INTO token (jti) VALUES (?)", (jti,))
-        conn.commit()
-        conn.close()
-        return jsonify(msg='JWT revocado'), 200
-    except sqlite3.IntegrityError:
-        return 'Token ya añadido a la base de datos', 409
+    cursor.execute("INSERT OR IGNORE INTO token (jti) VALUES (?)", (jti,))
+    conn.commit()
+    conn.close()
+    return jsonify(msg='JWT revocado'), 200
 
-#----------------------------------------------------------------------#
-@app.route('/carrito/add', methods=['POST'])
-@jwt_required()
-def añadir_producto_carrito():
-    carrito = Carrito()
-    producto = Producto()  # Aquí falta la lógica de creación a partir de los datos
-    if producto not in carrito:
-        carrito.anyadir_producto(producto)
-        return f'Producto añadido al carrito', 202
-    else:
-        return f'Producto ya incluido en el carrito', 409
-
-#-------------------------------------------------------------------------------#
-@app.route('/carrito/delete', methods=['DELETE'])
-@jwt_required()
-def eliminar_producto_carrito():
-    carrito = Carrito()
-    producto = Producto()  # Igual, debe construirse desde los datos recibidos
-    if producto in carrito:
-        carrito.eliminar_producto(producto)
-        return f'Producto eliminado del carrito', 202
-    else:
-        return f'Producto no existe en el carrito', 409
-
-#-----------------------------------------------------------------------------------#
-@app.route('/carrito', methods=['DELETE'])
-@jwt_required()
-def vaciar_carrito():
-    carrito = Carrito()
-    if carrito:
-        carrito.vaciar_carrito()
-        return 'Carrito vaciado', 202
-    else:
-        return 'El carrito ya está vacío', 409
-
-'''
-
-#---------------------------------------------------------------------------------------#
-@app.route('/factura', methods=['GET'])
-@jwt_required()
-def generar_factura_producto():
-    factura = FacturaPDF()
-    try:
-        return factura.generar(), 202
-    except KeyError:
-        return 'Producto no encontrado', 409
-
-'''
-#------------------------------------------------------------------------------------------#
-@app.route('/tienda', methods=['POST'])
-@jwt_required()
-def añadir_producto_tienda():
-    tienda = Tienda()
-    producto = Producto()  # Debería crearse con los datos recibidos
-
-    if producto not in tienda:
-        tienda.guardar(producto, producto.precio, producto.stock)
-        return 'Producto guardado correctamente', 202
-    else:
-        return 'El producto ya se encontraba en la tienda', 409
-
-#------------------------------------------------------------------------------------------#
-@app.route('/carrito/ver', methods=['GET'])
-@jwt_required()
-def ver_carrito():
-    carrito = Carrito()
-    return jsonify(carrito.mostrar())
-
-#-----------------------------------------------------------------------------------------------#
-@app.route('/tienda', methods=['GET'])
-@jwt_required()
-def mostrar_catalogo():
-    tienda = Tienda()
-    productos = tienda.listar_productos()
-    if productos:
-        return jsonify(productos), 202
-    else:
-        return 'La tienda está vacía', 404
-
-#--------------------------------------------------------------------------------------------#
-@app.route('/producto/reseña', methods=['POST'])
-@jwt_required()
-def añadir_reseña():
-    producto = request.args.get('producto')
-    puntuacion = request.args.get('puntuacion')
-    comentario = request.args.get('comentario')
-    return Producto.añadir_reseña(producto, puntuacion, comentario)
-
-#--------------------------------------------------------------------------------------------#
-@app.route('/cliente', methods=['POST'])
+@app.route('/saldo', methods=['POST'])
 @jwt_required()
 def recargar_saldo():
-    cantidad = float(request.args.get('cantidad', 0))
+    data = request.json
+    cantidad = float(data.get('cantidad', 0))
     cliente = Cliente()
     cliente.recargar_saldo(cantidad)
     return 'Saldo recargado', 200
 
-#---------------------------------------------------------------------------------------------#
+@app.route('/premium', methods=['POST'])
+@jwt_required()
+def pasar_a_premium():
+    cliente = Cliente()
+    resultado = cliente.cuenta_premium()
+    return resultado
+
+@app.route('/carrito', methods=['GET'])
+@jwt_required()
+def ver_carrito():
+    carrito = Carrito()
+    return jsonify(carrito.mostrar()), 200
+
+@app.route('/carrito', methods=['POST'])
+@jwt_required()
+def comprar_producto():
+    data = request.json
+    nombre = data.get('producto')
+    cantidad = data.get('cantidad')
+    producto = Prod(nombre)
+    producto.set_cantidad(cantidad)
+    carrito = Carrito()
+    carrito.anyadir_producto(producto)
+    return 'Producto añadido al carrito', 200
+
+@app.route('/carrito', methods=['DELETE'])
+@jwt_required()
+def eliminar_producto_carrito():
+    data = request.json
+    nombre = data.get('producto')
+    cantidad = data.get('cantidad')
+    producto = Prod(nombre)
+    producto.set_cantidad(cantidad)
+    carrito = Carrito()
+    carrito.eliminar_producto(producto)
+    return 'Producto eliminado del carrito', 200
+
+@app.route('/compra/finalizar', methods=['POST'])
+@jwt_required()
+def finalizar_compra():
+    cliente = Cliente()
+    cliente.finalizar_compra()
+    return cliente, 200
+
+@app.route('/productos', methods=['GET'])
+@jwt_required()
+def ver_catalogo():
+    tienda = Tienda()
+    return print(tienda), 200
+
+@app.route('/producto', methods=['POST'])
+@jwt_required()
+def publicar_producto():
+    data = request.json
+    producto = Prod(data['nombre'], data['precio'], data['stock'], data['volumen'], data['peso'], data['estado'])
+    producto = Producto()
+    producto.guardar(producto, producto.precio, producto.stock)
+    return 'Producto publicado', 200
+
+@app.route('/producto/<string:nombre>/resenya', methods=['POST'])
+@jwt_required()
+def añadir_reseña(nombre):
+    data = request.json
+    puntuacion = data.get('puntuacion')
+    comentario = data.get('comentario')
+    return Producto.anyadir_resenya(nombre, puntuacion, comentario), 200
+
+@app.route('/producto/<string:nombre>/resenyas', methods=['GET'])
+def ver_reseñas(nombre):
+    return jsonify(Producto.mostrar_resenyas(nombre)), 200
+
+@app.route('/historial', methods=['GET'])
+@jwt_required()
+def mostrar_historial():
+    cliente = Cliente()
+    return jsonify(cliente.mostrar_historial_compras()), 200
+
 if __name__ == '__main__':
     app.run(debug=True)

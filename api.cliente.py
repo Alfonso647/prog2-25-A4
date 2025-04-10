@@ -5,7 +5,7 @@ token = ''
 usuario_actual = ''
 
 def registrar_usuario(nombre, apellido1, apellido2, usuario):
-    response = requests.post(f'{URL}/registro', json={
+    response = requests.post(f'{URL}/singup', json={
         'nombre': nombre,
         'ape1': apellido1,
         'ape2': apellido2,
@@ -40,7 +40,7 @@ def eliminar_producto_carrito(nombre, cantidad):
     print(response.text)
 
 def finalizar_compra():
-    response = requests.post(f'{URL}/carrito/finalizar', headers={'Authorization': f'Bearer {token}'})
+    response = requests.post(f'{URL}/compra/finalizar', headers={'Authorization': f'Bearer {token}'})
     print(response.text)
 
 def ver_catalogo():
