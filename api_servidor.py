@@ -269,7 +269,7 @@ def vaciar_carrito():
 
 #---------------------------------------------------------------------------------------#
 
-@app.route('/producto', methods=['POST'])  #genera factura producto
+@app.route('/factura', methods=['POST'])  #genera factura producto
 def generar_factura_producto():
     """
     Genera una factura del producto. Solo los usuarios que hayan iniciado sesión pueden
