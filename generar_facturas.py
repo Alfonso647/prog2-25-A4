@@ -1,6 +1,6 @@
 from fpdf import FPDF
 from datetime import datetime
-
+#
 class FacturaPDF:
     def __init__(self,cliente, carrito,filename="factura.pdf"):
         self.cliente = cliente
