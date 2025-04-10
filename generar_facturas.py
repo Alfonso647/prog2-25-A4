@@ -2,10 +2,9 @@ from fpdf import FPDF
 from datetime import datetime
 
 class FacturaPDF:
-    def __init__(self,cliente, carrito, total, factura_id,filename="factura.pdf"):
+    def __init__(self,cliente, carrito, factura_id,filename="factura.pdf"):
         self.cliente = cliente
         self.productos = carrito
-        self.total = total
         self.factura_id = factura_id
         self.fecha = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
         self.filename = filename
@@ -42,6 +41,7 @@ class FacturaPDF:
                 cantidad=cantidad
                 precio=nombre.precio
                 subtotal= cantidad*precio
+                total+=subtotal
 
                 self.pdf.cell(80, 10,nombre, border=1)
                 self.pdf.cell(30, 10, str(cantidad), border=1)
@@ -52,7 +52,7 @@ class FacturaPDF:
         self.pdf.ln(5)
         self.pdf.set_font("Arial", style="B",size=12)
         self.pdf.cell(150,10,txt="TOTAL:",align="R")
-        self.pdf.cell(40, 10, txt=f"{self.total:.2f}", border=1, ln=True)
+        self.pdf.cell(40, 10, txt=f"{total:.2f}", border=1, ln=True)
 
         #Pie de página
         self.pdf.ln(15)
