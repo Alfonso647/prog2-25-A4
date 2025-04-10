@@ -7,7 +7,8 @@
     <list default="true" id="c5d68f3e-7eb4-4b58-8087-820805a98cd2" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/api.cliente.py" beforeDir="false" afterPath="$PROJECT_DIR$/api.cliente.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api_servidor.py" beforeDir="false" afterPath="$PROJECT_DIR$/api_servidor.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/entorno_prog/api.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/requirements" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -39,11 +40,11 @@
   "keyToString": {
     "Python.api.cliente.executor": "Run",
     "Python.api.executor": "Run",
-    "Python.api_servidor.executor": "Debug",
+    "Python.api_servidor.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
     "git-widget-placeholder": "api",
-    "last_opened_file_path": "/home/prog2/Documentos/GitHub/prog2-25-A4/entorno_prog",
+    "last_opened_file_path": "/home/prog2/Documentos/GitHub/prog2-25-A4",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -86,7 +87,7 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="SDK_NAME" value="Python 3.12 (pythonProject)" />
+      <option name="SDK_NAME" value="Python 3.12 (prog2-25-A4)" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <option name="IS_MODULE_SDK" value="false" />
       <option name="ADD_CONTENT_ROOTS" value="true" />

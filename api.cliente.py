@@ -1,172 +1,223 @@
-"""
-Cliente de prueba para la API de la tienda.
-
-Permite probar funcionalidades como:
-- Iniciar/cerrar sesión
-- Gestión de usuarios y productos
-- Gestión del carrito
-- Generar facturas
-
-Librerías necesarias:
----------------------
-- requests
-
-URL base de la API:
--------------------
-http://127.0.0.1:5000
-
-Uso:
-----
->> python api_cliente.py
-"""
-
 import requests
 
 URL = 'http://127.0.0.1:5000'
 token = ''
+usuario_actual = ''
 
+def registrar_usuario(nombre, apellido1, apellido2, usuario):
+    response = requests.post(f'{URL}/registro', json={
+        'nombre': nombre,
+        'ape1': apellido1,
+        'ape2': apellido2,
+        'usuario': usuario
+    })
+    print(response.text)
 
-def test_server():
-    r = requests.get(URL)
-    print(r.status_code)
-    print(r.text)
+def iniciar_sesion(usuario):
+    global token, usuario_actual
+    response = requests.post(f'{URL}/login', json={'usuario': usuario})
+    if response.status_code == 200:
+        token = response.json()['token']
+        usuario_actual = usuario
+        print(f'Se ha iniciado sesión como {usuario}')
+    else:
+        print(response.text)
 
+def recargar_saldo(cantidad):
+    response = requests.post(f'{URL}/saldo', json={'cantidad': cantidad}, headers={'Authorization': f'Bearer {token}'})
+    print(response.text)
 
-def leer_producto(producto):
-    global token
-    payload={'carrito':carrito}
-    r = requests.post(f'{URL}/factura/', json=payload, headers={'Authorization': 'Bearer ' + token})
-    print(r.status_code)
-    print(r.text)
+def pasar_a_premium():
+    response = requests.post(f'{URL}/premium', headers={'Authorization': f'Bearer {token}'})
+    print(response.text)
 
+def ver_carrito():
+    response = requests.get(f'{URL}/carrito', headers={'Authorization': f'Bearer {token}'})
+    print(response.text)
 
-def vaciar_carrito(carrito):
-    global token
-    r = requests.delete(f'{URL}/carrito/{carrito}', headers={'Authorization': 'Bearer ' + token})
-    print(r.status_code)
-    print(r.text)
+def eliminar_producto_carrito(nombre, cantidad):
+    response = requests.delete(f'{URL}/carrito', json={'producto': nombre, 'cantidad': cantidad}, headers={'Authorization': f'Bearer {token}'})
+    print(response.text)
 
+def finalizar_compra():
+    response = requests.post(f'{URL}/carrito/finalizar', headers={'Authorization': f'Bearer {token}'})
+    print(response.text)
 
-def crear_cuenta(user, password):
-    r = requests.post(f'{URL}/signup', json={'username': user, 'password': password})
-    print(r.status_code)
-    print(r.text)
+def ver_catalogo():
+    response = requests.get(f'{URL}/productos')
+    print(response.text)
 
+def comprar_producto(nombre, cantidad):
+    response = requests.post(f'{URL}/carrito', json={'producto': nombre, 'cantidad': cantidad}, headers={'Authorization': f'Bearer {token}'})
+    print(response.text)
 
-def iniciar_sesion(user, password):
-    global token
-    r = requests.post(f'{URL}/login', json={'username': user, 'password': password})
-    print(r.status_code)
-    print(r.text)
-    if r.status_code == 202:
-        token = r.json().get('access_token', '')
+def mostrar_historial():
+    response = requests.get(f'{URL}/historial', headers={'Authorization': f'Bearer {token}'})
+    print(response.text)
 
+def publicar_producto(nombre, precio, stock, volumen, peso, estado):
+    response = requests.post(f'{URL}/producto', json={
+        'nombre': nombre,
+        'precio': precio,
+        'stock': stock,
+        'volumen': volumen,
+        'peso': peso,
+        'estado': estado
+    }, headers={'Authorization': f'Bearer {token}'})
+    print(response.text)
 
-def generar_factura():
-    global token
-    r = requests.get(f'{URL}/factura', headers={'Authorization': 'Bearer ' + token})
-    print(r.status_code)
-    print(r.text)
+def añadir_reseña(producto, puntuacion, comentario):
+    response = requests.post(f'{URL}/producto/{producto}/resenya', json={
+        'puntuacion': puntuacion,
+        'comentario': comentario
+    }, headers={'Authorization': f'Bearer {token}'})
+    print(response.text)
 
-
-def eliminar_producto_carrito(producto):
-    global token
-    r = requests.delete(f'{URL}/carrito/delete/{producto}', headers={'Authorization': 'Bearer ' + token})
-    print(r.status_code)
-    print(r.text)
-
-
-def añadir_producto_carrito(producto):
-    global token
-    r = requests.post(f'{URL}/carrito/add', json={'producto': producto}, headers={'Authorization': 'Bearer ' + token})
-    print(r.status_code)
-    print(r.text)
-
-
-def mostrar_catalogo():
-    global token
-    r = requests.get(f'{URL}/tienda', headers={'Authorization': 'Bearer ' + token})
-    print(r.status_code)
-    print(r.text)
-
-
-def añadir_resena(producto, texto):
-    global token
-    r = requests.post(f'{URL}/producto/reseña/{producto}', json={'texto': texto}, headers={'Authorization': 'Bearer ' + token})
-    print(r.status_code)
-    print(r.text)
-
+def ver_reseñas(producto):
+    response = requests.get(f'{URL}/producto/{producto}/resenyas')
+    print(response.text)
 
 def cerrar_sesion():
-    global token
-    r = requests.delete(f'{URL}/logout', headers={'Authorization': 'Bearer ' + token})
-    print(r.status_code)
-    print(r.text)
+    global token, usuario_actual
+    response = requests.delete(f'{URL}/logout', headers={'Authorization': f'Bearer {token}'})
+    print(response.text)
     token = ''
+    usuario_actual = ''
 
+
+# Función principal del menú
+def menu_log():
+    print('1. Registrarse')
+    print('2. Iniciar sesión')
+    opc_log = 0
+    try:
+        while opc_log < 1 or opc_log > 2:
+            opc_log = int(input('¿Tienes cuenta? '))
+    except ValueError:
+        print('Error. Introduce un número válido')
+    return opc_log
 
 def menu():
-    while True:
-        print("\n=== MENÚ DE LA TIENDA ===")
-        print("1. Comprobar servidor")
-        print("2. Iniciar sesión")
-        print("3. Crear cuenta")
-        print("4. Ver producto")
-        print("5. Ver catálogo")
-        print("6. Vaciar carrito")
-        print("7. Añadir producto al carrito")
-        print("8. Eliminar producto del carrito")
-        print("9. Generar factura")
-        print("10. Añadir reseña")
-        print("11. Cerrar sesión")
-        print("0. Salir")
+    print('1. Recargar saldo')
+    print('2. Pasarse a premium')
+    print('3. Ver carrito')
+    print('4. Catálogo de productos')
+    print('5. Mostrar historial de compras')
+    print('6. Publicar producto en venta')
+    print('7. Añadir reseña a producto comprado')
+    print('8. Ver reseñas de un producto')
+    print('9. Cerrar sesión')
+    print('10. Salir')
+    try:
+        opc = 0
+        while opc < 1 or opc > 10:
+            opc = int(input('Selecciona una opción válida: '))
+    except ValueError:
+        print('Error. Introduce un número válido')
+    return opc
 
-        choice = input('Opción: ')
+def main():
+    opc_log = menu_log()
 
-        if choice == '1':
-            test_server()
-        elif choice == '2':
-            usuario = input('Usuario: ')
-            contraseña = input('Contraseña: ')
-            iniciar_sesion(usuario, contraseña)
-        elif choice == '3':
-            while True:
-                usuario = input('Nuevo usuario: ')
-                pass1 = input('Contraseña: ')
-                pass2 = input('Confirmar contraseña: ')
-                if pass1 == pass2:
-                    crear_cuenta(usuario, pass1)
-                    break
-                else:
-                    print("Las contraseñas no coinciden.")
-        elif choice == '4':
-            producto = input('Nombre del producto: ')
-            leer_producto(producto)
-        elif choice == '5':
-            mostrar_catalogo()
-        elif choice == '6':
-            carrito = input('ID del carrito: ')
-            vaciar_carrito(carrito)
-        elif choice == '7':
-            producto = input('Producto a añadir: ')
-            añadir_producto_carrito(producto)
-        elif choice == '8':
-            producto = input('Producto a eliminar: ')
-            eliminar_producto_carrito(producto)
-        elif choice == '9':
-            generar_factura()
-        elif choice == '10':
-            producto = input('Producto para reseñar: ')
-            texto = input('Escribe tu reseña: ')
-            añadir_resena(producto, texto)
-        elif choice == '11':
+    if opc_log == 1:
+        nombre = input('Nombre: ')
+        ape1 = input('Apellido 1: ')
+        ape2 = input('Apellido 2: ')
+        usuario = input('Usuario: ')
+        registrar_usuario(nombre, ape1, ape2, usuario)
+
+    usuario = input('Usuario para iniciar sesión: ')
+    iniciar_sesion(usuario)
+
+    salir = False
+    while not salir:
+        opc = menu()
+
+        if opc == 1:
+            try:
+                cantidad = float(input('Cantidad a recargar: '))
+                recargar_saldo(cantidad)
+            except ValueError:
+                print('Introduce un número válido.')
+
+        elif opc == 2:
+            print('1. Sí\n2. No')
+            try:
+                opc_p = int(input('¿Pasarte a premium por 100€? '))
+                if opc_p == 1:
+                    pasar_a_premium()
+            except ValueError:
+                print('Introduce un número válido.')
+
+        elif opc == 3:
+            ver_carrito()
+            print('1. Eliminar producto\n2. Finalizar compra\n3. Volver')
+            try:
+                opc_car = int(input('Opción: '))
+                if opc_car == 1:
+                    nombre = input('Producto a eliminar: ')
+                    cantidad = int(input('Cantidad: '))
+                    eliminar_producto_carrito(nombre, cantidad)
+                elif opc_car == 2:
+                    finalizar_compra()
+            except ValueError:
+                print('Error.')
+
+        elif opc == 4:
+            ver_catalogo()
+            print('1. Añadir producto\n2. Volver')
+            try:
+                opc_cat = int(input('Opción: '))
+                if opc_cat == 1:
+                    nombre = input('Producto: ')
+                    cantidad = int(input('Cantidad: '))
+                    comprar_producto(nombre, cantidad)
+            except ValueError:
+                print('Error.')
+
+        elif opc == 5:
+            mostrar_historial()
+
+        elif opc == 6:
+            try:
+                nombre = input('Nombre: ')
+                precio = float(input('Precio: '))
+                stock = int(input('Stock: '))
+                volumen = float(input('Volumen: '))
+                peso = float(input('Peso: '))
+                estado = input('Estado (nuevo/segunda mano): ')
+                publicar_producto(nombre, precio, stock, volumen, peso, estado)
+            except Exception as e:
+                print(f"Error: {e}")
+
+        elif opc == 7:
+            nombre = input('Producto a reseñar: ')
+            try:
+                puntuacion = float(input('Puntuación (0-10): '))
+                comentario = input('Comentario: ')
+                añadir_reseña(nombre, puntuacion, comentario)
+            except ValueError:
+                print('Error.')
+
+        elif opc == 8:
+            nombre = input('Nombre del producto: ')
+            ver_reseñas(nombre)
+
+        elif opc == 9:
             cerrar_sesion()
-        elif choice == '0':
-            print("Saliendo...")
-            break
-        else:
-            print("Opción inválida.")
+            opc_log = menu_log()
+            if opc_log == 1:
+                nombre = input('Nombre: ')
+                ape1 = input('Apellido 1: ')
+                ape2 = input('Apellido 2: ')
+                usuario = input('Usuario: ')
+                registrar_usuario(nombre, ape1, ape2, usuario)
+            usuario = input('Usuario para iniciar sesión: ')
+            iniciar_sesion(usuario)
 
+        elif opc == 10:
+            print('Hasta luego.')
+            salir = True
 
 if __name__ == '__main__':
-    menu()
+    main()
