@@ -144,6 +144,46 @@ def login():
 
 #----------------------------------------------------------------------#
 
+@jwt.token_in_blocklist_loader()
+def comprobar_token():
+    """
+    Comprueba si el token ha sido eliminado
+
+    :return:
+
+    ->
+    ->
+
+    """
+
+    jti = jwt_payload['jti']
+    conn = sqlite3.connect((PATH_DB))
+    cursor = conn.cursor()
+    cursor.execute("Select jti From token WHERE jti = ?", (jti,))
+    token = cursos.fetchone()
+    conn.close()
+    return token is not None
+
+@app.route("/logout", methods = ['DELETE'])
+@jwt_required()
+def cerrar_sesion()
+    """
+    Cierra sesión
+    :return: 
+    ->
+    ->
+    """
+    jti = get_jwt()['jti']
+    try:
+        conn.commit()
+        conn.close()
+        return jsonify(msg='JWT revocado'), 200
+    except sqlite3.IntegrityError:
+        return 'Token ya añadido a la base de datos'
+
+
+#----------------------------------------------------------------------#
+
 @app.route('/carrito/add', methods=['POST'])   #añadir productos al carrito
 @jwt_required() #solo los usuarios registrados pueden hacerlo
 def añadir_producto_carrito(producto):
@@ -203,7 +243,7 @@ def eliminar_producto_carrito(producto):
 
 @app.route('/carrito', methods=['DELETE'])  #vacia el carrito
 @jwt_required()  # solo los usuarios registrados pueden hacerlo
-def vaciar_carrito(producto):
+def vaciar_carrito():
     """
     AVacía el carrito. Solo los usuarios que hayan iniciado sesión pueden
     realizar esta acción
@@ -220,9 +260,9 @@ def vaciar_carrito(producto):
     """
     carrito = Carrito()
     if carrito is not None:
-        carrito[] = request.args.get('value', '')
-        carrito.vaciar_carrito(producto)
-        return f'Dato {producto} añadido al carrito', 200
+        carrito = request.args.get('value', '')
+        carrito.vaciar_carrito()
+        return f'Carrito vaciado: {carrito}', 200
     else:
         return f'El carrito ya está vacío', 409
 
@@ -286,7 +326,46 @@ def ver_carrito():
     ->
     """
     carrito = Carrito()
-    return print(carrito.carrito)
+    return print(carrito)
+
+#-----------------------------------------------------------------------------------------------#
+
+@app.route('/tienda', methods = ['GET'])
+@jwt_required()
+def mostrar_catalogo():
+    """
+    Muestra todos los productos de la tienda
+
+    :return:
+
+    -> Si muestra los objetos, devuelve el código de estado 202
+    -> Si la tienda esta vacía, devuelve el código 404
+
+    """
+    tienda = Tienda()
+    tienda = request.args.get('tienda','')
+    return print(tienda)
+
+#--------------------------------------------------------------------------------------------------#
+
+@app.route('/producto/reseña', methods = ['POST'])
+@jwt_required()
+def añadir_reseña(producto,puntuación,comentario):
+    """
+    Añade una reseña a un producto
+
+    :return:
+
+    -> Si el producto existe, 202
+    -> Si no se encuentra el producto, 404
+    """
+    return añadir_reseña(producto,puntuación,comentario)
+
+#--------------------------------------------------------------------------------------------#
+
+
+
+
 
 if __name__ == '__main__':
     app.run(debug=True)

@@ -175,6 +175,36 @@ def añadir_prodcuto_carrito():
 
 #---------------------------------------------------------------------------#
 
+def mostrar_catalogo():
+    """
+    Muestra los productos de la tienda
+
+    :return:
+
+    -> Si se muestran todos los prodcutos de la tienda, 202
+    -> Si la tienda esta vacía, 400
+
+    """
+    global token
+    r = requests.get(f'{URL}/tienda/{producto}', headers={'Authorization': 'Bearer ' + token})
+    print(r.status_code)
+    print(r.text)
+
+#-------------------------------------------------------------------------#
+
+def añadir_reseña():
+    """
+    Añade una reseña a un producto
+    :return:
+    ->
+    ->
+    """
+    global token
+    r = requests.get(f'{URL}/producto/reseña/{producto}', headers={'Authorization': 'Bearer ' + token})
+    print(r.status_code)
+    print(r.text)
+
+
 def menu():
     while True:
         print("\n==MENU==")
