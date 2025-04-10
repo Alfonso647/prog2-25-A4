@@ -7,6 +7,7 @@
     <list default="true" id="c5d68f3e-7eb4-4b58-8087-820805a98cd2" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/api.cliente.py" beforeDir="false" afterPath="$PROJECT_DIR$/api.cliente.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api_servidor.py" beforeDir="false" afterPath="$PROJECT_DIR$/api_servidor.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
