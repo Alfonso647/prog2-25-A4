@@ -4,7 +4,7 @@ from datetime import datetime
 class FacturaPDF:
     def __init__(self,cliente, carrito, total, factura_id,filename="factura.pdf"):
         self.cliente = cliente
-        self.carrito = carrito
+        self.productos = carrito
         self.total = total
         self.factura_id = factura_id
         self.fecha = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
@@ -36,16 +36,17 @@ class FacturaPDF:
 
         #Filas de productos
         self.pdf.set_font("Arial", size=12)
-        for producto, cantidad in self.carrito.items():
-            nombre=producto.nombre
-            cantidad=cantidad
-            precio=producto.precio
-            subtotal= cantidad*precio
+        for producto in self.carrito:
+            for nombre, cantidad in producto.items():
+                nombre=nombre.nombre
+                cantidad=cantidad
+                precio=nombre.precio
+                subtotal= cantidad*precio
 
-            self.pdf.cell(80, 10,nombre, border=1)
-            self.pdf.cell(30, 10, str(cantidad), border=1)
-            self.pdf.cell(40, 10, txt=f"${precio:.2f}", border=1)
-            self.pdf.cell(40, 10, txt=f"${subtotal:.2f}", border=1,ln=True)
+                self.pdf.cell(80, 10,nombre, border=1)
+                self.pdf.cell(30, 10, str(cantidad), border=1)
+                self.pdf.cell(40, 10, txt=f"${precio:.2f}", border=1)
+                self.pdf.cell(40, 10, txt=f"${subtotal:.2f}", border=1,ln=True)
 
         #Total
         self.pdf.ln(5)
