@@ -4,7 +4,7 @@ from datetime import datetime
 class FacturaPDF:
     def __init__(self,cliente, carrito, total, factura_id,filename="factura.pdf"):
         self.cliente = cliente
-        self.productos = carrito
+        self.carrito = carrito
         self.total = total
         self.factura_id = factura_id
         self.fecha = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
