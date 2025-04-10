@@ -12,7 +12,7 @@ Cada producto tiene:
 - un precio
 - una imagen (enlace a una foto)
 
-Usamos SQLAlchemy para que Python pueda trabajar con la base de datos de forma fácil.
+Usamos SQLAlchemy para que Python pueda trabajar con la base de datos.
 '''
 
 from flask_sqlalchemy import SQLAlchemy

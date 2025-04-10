@@ -16,10 +16,10 @@ from app import app, db
 from models import Producto
 
 with app.app_context():
-    db.drop_all()  # Esto borra all si ya existía, útil para reiniciar limpio
+    db.drop_all()  # ⚠ Esto borra all si ya existía, útil para reiniciar limpio
     db.create_all()
 
-    #Productos de prueba
+    # Productos de prueba
     producto1 = Producto(
         nombre="Auriculares Bluetooth",
         descripcion="Auriculares con cancelación de ruido",
@@ -45,4 +45,4 @@ with app.app_context():
     db.session.add_all([producto1, producto2, producto3])
     db.session.commit()
 
-    print("Base de datos creada con productos de prueba.")
+    print("✔️ Base de datos creada con productos de prueba.")
