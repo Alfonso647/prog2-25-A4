@@ -40,6 +40,7 @@ from fpdf import FPDF
 from TCarrito import Carrito
 from TCliente import Cliente, Administrador
 from TProd import Producto
+from generar_facturas import FacturaPDF
 
 ACCESS_EXPIRES = timedelta(hours=0.30)   #los token solo tienen media hora de validez
 app = Flask(__name__)
