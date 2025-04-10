@@ -54,7 +54,7 @@ def principal():
 #-------------------------------------------------------------------------------------------------------#
 @app.route('/singup', methods=['POST'])
 #@jwt_required : no es necesario seguridad para crear una nueva cuenta
-def singup():
+def singup(user,password):
     """
     Esta funcionalidad crea una nueva cuenta: nuevo usuario con su contraseña
 
@@ -347,7 +347,7 @@ def mostrar_catalogo():
     tienda = request.args.get('tienda','')
     return print(tienda)
 
-#--------------------------------------------------------------------------------------------------#
+#--------------------------------------------------------------------------------------------#
 
 @app.route('/producto/reseña', methods = ['POST'])
 @jwt_required()
@@ -364,5 +364,19 @@ def añadir_reseña(producto,puntuación,comentario):
 
 #--------------------------------------------------------------------------------------------#
 
+@app.route('/cliente', methods=['POST'])
+@jwt_required()
+def recargar_saldo(cantidad):
+    """
+    Recarga el saldo del cliente
+
+    :return:
+
+    """
+    cliente = Cliente()
+    cliente.recargar_saldo(cantidad)
+
 if __name__ == '__main__':
     app.run(debug=True)
+
+#---------------------------------------------------------------------------------------------#
