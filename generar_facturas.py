@@ -2,9 +2,9 @@ from fpdf import FPDF
 from datetime import datetime
 
 class FacturaPDF:
-    def __init__(self,cliente, productos, total, factura_id,filename="factura.pdf"):
+    def __init__(self,cliente, carrito, total, factura_id,filename="factura.pdf"):
         self.cliente = cliente
-        self.productos = productos
+        self.productos = carrito
         self.total = total
         self.factura_id = factura_id
         self.fecha = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
@@ -36,10 +36,10 @@ class FacturaPDF:
 
         #Filas de productos
         self.pdf.set_font("Arial", size=12)
-        for producto in self.productos:
-            nombre=producto["nombre"]
-            cantidad=producto.get("cantidad",1)
-            precio=producto["precio"]
+        for producto, cantidad in self.carrito.items():
+            nombre=producto.nombre
+            cantidad=cantidad
+            precio=producto.precio
             subtotal= cantidad*precio
 
             self.pdf.cell(80, 10,nombre, border=1)
@@ -61,17 +61,3 @@ class FacturaPDF:
         #Guardar
         self.pdf.output(self.filename)
 
-'''
-#Prueba 
-
-productos =[
-    {"nombre":"Auriculares","precio":30,"cantidad":2},
-    {"nombre": "Teclado", "precio": 45, "cantidad": 1},
-    {"nombre": "Mouse", "precio": 25, "cantidad": 3}
-]
-
-total=sum(producto["precio"]*producto.get("cantidad",1) for producto in productos)
-
-factura=FacturaPDF("Linxi",productos,total,"0001")
-factura.generar()
-'''
