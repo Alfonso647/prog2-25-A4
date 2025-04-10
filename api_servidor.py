@@ -103,14 +103,14 @@ def cerrar_sesion():
 def recargar_saldo():
     data = request.json
     cantidad = float(data.get('cantidad', 0))
-    cliente = Cliente()
+    cliente = TCliente()
     cliente.recargar_saldo(cantidad)
     return 'Saldo recargado', 200
 
 @app.route('/premium', methods=['POST'])
 @jwt_required()
 def pasar_a_premium():
-    cliente = Cliente()
+    cliente = TCliente()
     resultado = cliente.cuenta_premium()
     return resultado
 
@@ -126,7 +126,7 @@ def comprar_producto():
     data = request.json
     nombre = data.get('producto')
     cantidad = data.get('cantidad')
-    producto = Prod(nombre)
+    producto = Producto(nombre)
     producto.set_cantidad(cantidad)
     carrito = Carrito()
     carrito.anyadir_producto(producto)
@@ -138,8 +138,7 @@ def eliminar_producto_carrito():
     data = request.json
     nombre = data.get('producto')
     cantidad = data.get('cantidad')
-    producto = Prod(nombre)
-    producto.set_cantidad(cantidad)
+    producto = Producto(nombre)
     carrito = Carrito()
     carrito.eliminar_producto(producto)
     return 'Producto eliminado del carrito', 200
@@ -161,7 +160,7 @@ def ver_catalogo():
 @jwt_required()
 def publicar_producto():
     data = request.json
-    producto = Prod(data['nombre'], data['precio'], data['stock'], data['volumen'], data['peso'], data['estado'])
+    producto = Producto(data['nombre'], data['precio'], data['stock'], data['volumen'], data['peso'], data['estado'])
     producto = Producto()
     producto.guardar(producto, producto.precio, producto.stock)
     return 'Producto publicado', 200
@@ -181,7 +180,7 @@ def ver_reseñas(nombre):
 @app.route('/historial', methods=['GET'])
 @jwt_required()
 def mostrar_historial():
-    cliente = Cliente()
+    cliente = TCliente()
     return jsonify(cliente.mostrar_historial_compras()), 200
 
 if __name__ == '__main__':
