@@ -1,19 +1,9 @@
 from TCarrito import Carrito
 from TTienda import Tienda
-from TResena import Reseña
+from TResena import Resenya
 from typing import Union
 from TProducto import Producto
-
-
-class Persona:
-    """
-    Clase base para representar a una persona del sistema.
-    """
-    def __init__(self, nombre: str, apellido1: str, apellido2: str, nombre_usuario: str):
-        self.nombre = nombre
-        self.apellido1 = apellido1
-        self.apellido2 = apellido2
-        self.nombre_usuario = nombre_usuario
+from TPersona import Persona
 
 
 class Cliente(Persona):
@@ -29,7 +19,7 @@ class Cliente(Persona):
         self.historial_compras = {}
         self.carrito = Carrito(f'Carrito de {self.nombre_usuario}')
         self.productos_en_venta = []
-        self.reseñas_realizadas = []
+        self.resenyas_realizadas = []
 
     def __str__(self) -> str:
         return f'Usuario: {self.nombre_usuario}, saldo: {self.saldo}€'
@@ -47,12 +37,12 @@ class Cliente(Persona):
         """Recarga saldo del cliente si la cantidad es válida (>0)."""
         if cantidad > 0:
             self.saldo += cantidad
-            print(f'Se han añadido {cantidad}€. Saldo total: {self.saldo}€')
+            print(f'Se han anyadido {cantidad}€. Saldo total: {self.saldo}€')
         else:
             print('Error: La cantidad debe ser mayor que 0')
 
     def comprar_producto(self, producto: Producto, cantidad: int):
-        """Añade un producto al carrito."""
+        """Anyade un producto al carrito."""
         self.carrito.anyadir_producto(producto, cantidad)
 
     def eliminar_producto(self, producto: Producto, cantidad: int = None):
@@ -89,29 +79,29 @@ class Cliente(Persona):
             for producto, valor in self.historial_compras.items():
                 print(f'{producto.nombre}, {valor} unidades compradas en total')
 
-    def añadir_reseña(self, producto: Producto, puntuacion: float, comentario: str):
+    def anyadir_resenya(self, producto: Producto, puntuacion: float, comentario: str):
         """
-        Añade una reseña a un producto comprado, valida puntuación (0-10)
+        Anyade una reseña a un producto comprado, valida puntuación (0-10)
         y la guarda en el historial del cliente.
         """
         try:
             if not (0 <= puntuacion <= 10):
                 raise ValueError("La puntuación debe estar entre 0 y 10.")
-            reseña = Reseña(self.nombre_usuario, puntuacion, comentario)
-            producto.añadir_reseña(self.nombre_usuario, puntuacion, comentario)
-            self.reseñas_realizadas.append(reseña)
-            print("Reseña añadida con éxito.")
+            resenya = Resenya(self.nombre_usuario, puntuacion, comentario)
+            producto.anyadir_resenya(self.nombre_usuario, puntuacion, comentario)
+            self.resenyas_realizadas.append(resenya)
+            print("Reseña anyadida con éxito.")
         except Exception as e:
-            print(f"Error al añadir reseña: {e}")
+            print(f"Error al anyadir reseña: {e}")
 
     def vender_producto(self, nombre, precio, stock, volumen, peso, estado):
         """
-        Crea un producto y lo añade tanto a la tienda como a los productos en venta del cliente.
+        Crea un producto y lo anyade tanto a la tienda como a los productos en venta del cliente.
         """
         producto = Producto(nombre, precio, stock, volumen, peso, estado='nuevo')
         Tienda.nuevo_producto(producto)
         self.productos_en_venta.append(producto)
-        print(f"Producto {nombre} añadido a la venta.")
+        print(f"Producto {nombre} anyadido a la venta.")
 
     def mostrar_productos_en_venta(self):
         """Muestra todos los productos que el cliente tiene puestos a la venta."""
@@ -122,11 +112,13 @@ class Cliente(Persona):
             for producto in self.productos_en_venta:
                 print("-", producto)
 
-    def mostrar_reseñas_realizadas(self):
+    def mostrar_resenyas_realizadas(self):
         """Muestra todas las reseñas escritas por el cliente."""
-        if not self.reseñas_realizadas:
+        if not self.resenyas_realizadas:
             print("No has escrito ninguna reseña todavía.")
         else:
             print("Tus reseñas:")
-            for reseña in self.reseñas_realizadas:
-                print("-", reseña)
+            for resenya in self.resenyas_realizadas:
+                print("-", resenya)
+
+

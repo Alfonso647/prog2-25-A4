@@ -1,4 +1,4 @@
-class Reseña:
+class Resenya:
     """
     Clase que representa una reseña de un producto.
 

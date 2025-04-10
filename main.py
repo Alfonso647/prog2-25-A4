@@ -99,7 +99,25 @@ def main():
 
         elif opc == 4:
             print('Ver catálogo de productos:')
+
             print(Tienda())
+
+            print('1. Añadir producto')
+            print('2. Volver')
+            try:
+                opc_tie = int(input('Selecciona una opción: '))
+                if opc_tie == 1:
+                    prod_any = input('Introduce el nombre del producto a añadir: ')
+                    cant_any = int(input('Introduce la cantidad de este producto a añadir: '))
+                    client.comprar_producto(prod_any, cant_any)
+                else:
+                    print('Has salido del carrito')
+
+            except ValueError:
+                print('Error. Introduce un número válido')
+            print('\n')
+
+
             print('\n')
 
         elif opc == 5:
@@ -136,7 +154,7 @@ def main():
                         raise ValueError("Selección no válida.")
                     puntuacion = float(input("Puntuación (0-10): "))
                     comentario = input("Comentario: ")
-                    client.añadir_reseña(productos[seleccion], puntuacion, comentario)
+                    client.anyadir_resenya(productos[seleccion], puntuacion, comentario)
                 except Exception as e:
                     print(f"Error al añadir reseña: {e}")
             print('\n')
@@ -148,7 +166,7 @@ def main():
             todos = list(client.historial_compras.keys()) + client.productos_en_venta
             for p in todos:
                 if p.nombre.lower() == nombre.lower():
-                    for linea in p.mostrar_reseñas():
+                    for linea in p.mostrar_resenyas():
                         print(linea)
                     encontrado = True
             if not encontrado:

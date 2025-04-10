@@ -1,4 +1,4 @@
-from TResena import Reseña  
+from TResena import Resenya  
 
 class Producto:
     """
@@ -35,7 +35,7 @@ class Producto:
         self.peso = peso
         self.fragil = fragil
         self.estado = estado
-        self.reseñas = []
+        self.resenyas = []
 
         self.guardar(self.nombre, self.precio, self.stock)
 
@@ -60,7 +60,7 @@ class Producto:
         cls.productos_stock[nombre] = stock
         cls.productos_precio[nombre] = precio
 
-    def añadir_reseña(self, usuario: str, puntuacion: int, comentario: str, cliente=None):
+    def añadir_resenya(self, usuario: str, puntuacion: int, comentario: str, cliente=None):
         """
         Añade una reseña al producto. Si se proporciona un cliente, también se añade a su historial.
 
@@ -77,24 +77,23 @@ class Producto:
 
        """
         try:
-            reseña = Reseña(usuario, puntuacion, comentario)
-            self.reseñas.append(reseña)
-            if cliente and hasattr(cliente, "reseñas_realizadas"):
-                cliente.reseñas_realizadas.append(reseña)
+            resenya = Resenya(usuario, puntuacion, comentario)
+            self.resenyas.append(resenya)
+            if cliente and hasattr(cliente, "resenyas_realizadas"):
+                cliente.resenyas_realizadas.append(resenya)
             return True
         except ValueError as e:
             return str(e) 
 
-    def mostrar_reseñas(self):
+    def mostrar_resenyas(self):
         """
         Devuelve las reseñas asociadas al producto.
         """
 
-        if not self.reseñas:
+        if not self.resenyas:
             return ["Este producto no tiene reseñas aún."]
-        return [str(r) for r in self.reseñas] # MIRAR ESTO
+        return [str(r) for r in self.resenyas] # MIRAR ESTO
 
     def __str__(self) -> str:
         sn = 'Sí' if self.fragil else 'No'
         return f'{self.nombre} ({self.estado}), {self.precio}€. Volumen: {self.volumen} cm³, Peso: {self.peso}g. ¿Frágil?: {sn}'
-
