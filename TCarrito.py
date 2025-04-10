@@ -2,7 +2,6 @@ from typing import Union
 from TProducto import Producto
 from TTienda import Tienda
 
-
 class Carrito:
     '''
     Clase que representa el carrito temporal de compra
@@ -123,9 +122,10 @@ class Carrito:
         total, envio = self.calcular_total()
         if self.carrito != False:
             resultado += f'El total a pagar es {round(total,2)}€.\n'
-            resultado += f'El precio del envío es de {envio}€'
+            resultado += f'El precio del envío es de {round(envio)}€'
         else:
             resultado += f'El carrito está vacío'
 
         return resultado
+    
 

@@ -3,7 +3,7 @@ from TCliente import Cliente
 from TCarrito import Carrito
 from TProducto import Producto
 from TVentaProducto import poner_producto_en_venta
-from api_cliente import generar_factura
+#from api_cliente import generar_factura
 
 def menu_log():
     print('1. Registrarse')
