@@ -1,48 +1,40 @@
 '''
 crear_db.py
 
-Este archivo se usa para crear la base de datos de la tienda.
+Este archivo se usa para crear la base de datos de la tienda y
+añadir productos, ya sea de prueba o desde un historial de compras.
 
-Cuando se ejecuta:
-- Borra la base de datos anterior (si existe)
-- Crea una nueva base de datos con la tabla de productos
-- Añade algunos productos de prueba para poder usar la API desde el principio
-
-Se ejecuta solo una vez al inicio, porque cada vez que ejecuteis se reincia la base de datos (borra all), o sino quitadle la linea de db.dropall.
+Contiene:
+- Una función para crear la base de datos y las tablas
+- Una función para guardar productos desde un historial de compras
 '''
-
 
 from app import app, db
 from models import Producto
 
-with app.app_context():
-    db.drop_all()  # ⚠ Esto borra all si ya existía, útil para reiniciar limpio
-    db.create_all()
+def crear_base():
+    '''Crea la base de datos y las tablas (borra si ya existían).'''
+    with app.app_context():
+        db.drop_all()
+        db.create_all()
+        print("✔️ Base de datos creada.")
 
-    # Productos de prueba
-    producto1 = Producto(
-        nombre="Auriculares Bluetooth",
-        descripcion="Auriculares con cancelación de ruido",
-        precio=49.99,
-        imagen_url="https://ejemplo.com/auriculares.jpg"
-    )
+def guardar_compras_en_db(historial_compras):
+    '''
+    Guarda los productos comprados en la base de datos a partir del historial.
+    Cada clave del diccionario es un objeto Producto, y el valor es la cantidad comprada.
+    '''
+    with app.app_context():
+        for producto, cantidad in historial_compras.items():
+            nuevo_producto = Producto(
+                nombre=producto.nombre,
+                precio=producto.precio,
+                stock=cantidad,
+                volumen=producto.volumen,
+                peso=producto.peso,
+                fragil=producto.fragil
+            )
+            db.session.add(nuevo_producto)
 
-    producto2 = Producto(
-        nombre="Teclado Mecánico",
-        descripcion="Teclado con luces RGB para gaming",
-        precio=89.99,
-        imagen_url="https://ejemplo.com/teclado.jpg"
-    )
-
-    producto3 = Producto(
-        nombre="Monitor 24 pulgadas",
-        descripcion="Monitor Full HD con entrada HDMI",
-        precio=149.99,
-        imagen_url="https://ejemplo.com/monitor.jpg"
-    )
-
-    # Guardamos en la base de datos
-    db.session.add_all([producto1, producto2, producto3])
-    db.session.commit()
-
-    print("✔️ Base de datos creada con productos de prueba.")
+        db.session.commit()
+        print("Compras guardadas en la base de datos.")
