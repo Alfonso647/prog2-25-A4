@@ -15,12 +15,12 @@ class Persona:
         El nombre de usuario de la persona
     '''
 
-    def __init__(self, nombre: str, apellido1: str, apellido2: str, nombre_usuario: str):
+    def __init__(self, nombre: str, apellido1: str, apellido2: str, nombre_usuario: str, password: str):
         self.nombre = nombre
         self.apellido1 = apellido1
         self.apellido2 = apellido2
         self.nombre_usuario = nombre_usuario
-
+        self.password = password
 
 
 class Cliente(Persona):
@@ -56,7 +56,7 @@ class Cliente(Persona):
 
     '''
     def __init__(self, nombre: str, apellido1: str, apellido2: str, nombre_usuario: str, saldo: float = 0.0):
-        super().__init__(nombre, apellido1, apellido2, nombre_usuario)
+        super().__init__(nombre, apellido1, apellido2, nombre_usuario, password)
         self.saldo = saldo
         self.cuenta_premium = False
         self.historial_compras = {}  # historial inicialmente vacío
@@ -158,6 +158,15 @@ class Cliente(Persona):
             for producto, valor in self.historial_compras.items():
                 print(f'{producto.nombre}, {valor} unidades compradas en total')
 
+
+class Administrador(Persona):
+    def __init__(self):
+        """
+        Crea el objeto Adiminstrador que hereda de Persona. Los administradores
+        pueden añadir , eliminar o actualizar nuevos usuarios al sistema
+
+        """
+        super().__init__(nombre, apellido1, apellido2, nombre_usuario, password)
 
 
 

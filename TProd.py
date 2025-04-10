@@ -38,6 +38,7 @@ class Producto:
         self.guardar(self.nombre, self.precio, self.stock)
         '''
         Este método guarda el stock y el precio de un producto, ya que luego lo utilizaremos
+        
         '''
         
     def guardar(cls, nombre, precio, stock):
