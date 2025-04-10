@@ -84,6 +84,19 @@ class Cliente(Persona):
         print('Compra finalizada. El carrito ha sido vaciado y el stock actualizado.')
         print(f'Saldo: {round(self.saldo, 2)}€')
 
+        #He añadido la parte para pedir al usuario si quiere generar factura. Si quiere generarla
+        #Entonces devolvemos 'factura' con un valor de s/n
+        try:
+            factura=input('¿Desea generar la factura (s/n):? ').lower()
+            if factura not in ['s', 'n']:
+                raise ValueError("Opcion no válda. Solo se acepta 's' o 'n")
+            else:
+                return factura
+
+        except ValueError as e:
+            print(e)
+
+
     def mostrar_historial_compras(self):
         """Muestra los productos comprados por el cliente."""
         if not self.historial_compras.items():

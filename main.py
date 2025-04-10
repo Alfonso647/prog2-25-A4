@@ -3,6 +3,7 @@ from TCliente import Cliente
 from TCarrito import Carrito
 from TProducto import Producto
 from TVentaProducto import poner_producto_en_venta
+from api_cliente import generar_factura
 
 def menu_log():
     print('1. Registrarse')
@@ -92,7 +93,11 @@ def main():
                     prod_elim = Tienda.producto_clase[prod_elim]
                     client.eliminar_producto(prod_elim, cant_elim)
                 elif opc_car == 2:
-                    client.finalizar_compra()
+                    #He modificado esta parte para agregar la funcionalidad de generar factura
+                    factura=client.finalizar_compra()
+                    if factura == 's':
+                        generar_factura(client.carrito)
+
                 else:
                     print('Has salido del carrito')
             except ValueError:
