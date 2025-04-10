@@ -19,10 +19,10 @@ Librerias:
 
 Configuraciones:
 ---------------
-->JWT_SECRET_KEY : A4
+->JWT_SECRET_KEY : 'mi_clave_A4'
 ---------------
 
-Para incializar la API:
+Para inicializar la API:
 
 >> python api.py
 
@@ -35,6 +35,7 @@ from crypt import methods
 from flask import Flask, request, jsonify
 from flask_jwt_extended import JWTManager, create_access_token, jwt_required, get_jwt_identity, get_jwt
 from config import JWT_SECRET_KEY
+from fpdf import FPDF
 
 from TCarrito import Carrito
 from TCliente import Cliente, Administrador
@@ -42,14 +43,15 @@ from TProd import Producto
 
 ACCESS_EXPIRES = timedelta(hours=0.30)   #los token solo tienen media hora de validez
 app = Flask(__name__)
-app.config["JWT_SECRET_KEY"] = A4
+app.config["JWT_SECRET_KEY"] = 'mi_clave_A4'
 app.config["JWT_ACCESS_TOKEN_EXPIRES"] = ACCESS_EXPIRES
 jwt = JWTManager(app)
 
+#------------------------------------------------------------------------------------------------------#
 @app.route("/")
 def principal():
     return 'Api de Productos funcionando correctmente'
-
+#-------------------------------------------------------------------------------------------------------#
 @app.route('/singup', methods=['POST'])
 #@jwt_required : no es necesario seguridad para crear una nueva cuenta
 def singup():
@@ -74,6 +76,8 @@ def singup():
         hashed = hash.lib.sha256(password.encode()).hexdigest()
         users[user] = hashed
         return f'Usuario {user} ha sido registrado correctamente', 200
+
+#-------------------------------------------------------------------------------------#
 
 @app.route('/login', methods=['GET']) #inicio sesión
 def login():
@@ -103,46 +107,49 @@ def login():
     else:
         return  f'Usuario o contraseña incorrectos', 401
 
-@app.route('/users', methods=['POST'])
-@jwt_required()
-def añadir_usuario():
-    """
-    Comprubea si eres administrador y añade un nuevo usuario al sistema.
+#-------------------------------------------------------------------------#
 
-    Lee los datos del usuario para comprobar si es administrador (desde la petición
-    request.args : nombre, apellido1, apellido2, nombre_usuario, password). Si es un
-    administrador, este podrá crear un nuevo usuario (codigo 200) y si no lo és, no
-    podrá hacerlo (404)
+#@app.route('/users', methods=['POST'])
+#@jwt_required()
+#def añadir_usuario():
+#    """
+#    Comprubea si eres administrador y añade un nuevo usuario al sistema.
+#
+#    Lee los datos del usuario para comprobar si es administrador (desde la petición
+#    request.args : nombre, apellido1, apellido2, nombre_usuario, password). Si es un
+#    administrador, este podrá crear un nuevo usuario (codigo 200) y si no lo és, no
+##    podrá hacerlo (404)
+#
+#    :return:
+#
+#     -> Si se crea un usuario nuevo: código de estado 202
+#     -> Si el usuario no es un administrador: código de estado 404
+#     -> Si el usuario que se intenta crear ya está registrado: código de error 409
+#    """
+#
+#    usuario = get_jwt_identity()
+#    user = Administrador()
+#    if not isinstance(user.nombre_usuario, Administrador):   ####REVISAR####
+#        return f'Solo los adminsitradores pueden realizar crear usuarios', 404
+#    nombre = request.args.get('nombre')
+#    apellido1 = request.args.get('apellido1')
+#    apellido2 = request.args.get('apellido2')
+#    password = request.args.get('password')
+#    admin = request.args.get('administrador', 'no')
+#
+#    if administrador == 'si':
+#        if usuario == '0':
+#            ##hace una falta una clase que pueda añadir usuarios
+#    #etc
 
-    :return:
-
-     -> Si se crea un usuario nuevo: código de estado 202
-     -> Si el usuario no es un administrador: código de estado 404
-     -> Si el usuario que se intenta crear ya está registrado: código de error 409
-    """
-
-    usuario = get_jwt_identity()
-    user = Administrador()
-    if not isinstance(user.nombre_usuario, Administrador):   ####REVISAR####
-        return f'Solo los adminsitradores pueden realizar crear usuarios', 404
-    nombre = request.args.get('nombre')
-    apellido1 = request.args.get('apellido1')
-    apellido2 = request.args.get('apellido2')
-    password = request.args.get('password')
-    admin = request.args.get('administrador', 'no')
-
-    if administrador == 'si':
-        if usuario == '0':
-            ##hace una falta una clase que pueda añadir usuarios
-    #etc
-
+#----------------------------------------------------------------------#
 
 @app.route('/carrito/add', methods=['POST'])   #añadir productos al carrito
 @jwt_required() #solo los usuarios registrados pueden hacerlo
 def añadir_producto_carrito(producto):
     """
     Añade un nuevo producto al carrito. Solo los usuarios que hayan iniciado sesión pueden
-    realizar esta acción
+    realizar esta acción.
 
     Comprueba que el hay un usuario que ha iniciado sesión. Obtiene la informaión del
     producto (nombre, precio, stock, volumen, peso, frágil)
@@ -150,6 +157,9 @@ def añadir_producto_carrito(producto):
     :param producto:
 
     :return:
+
+    -> Si el producto se ha añadido correctmaente, codigo de estado 202
+    -> Si el producto ya estaba en el carrito, código de estado 409
     """
 
     carrito = Carrito()
@@ -157,10 +167,11 @@ def añadir_producto_carrito(producto):
     if producto not in carrito:
         carrito[producto] = request.args.get('value','')
         carrito.anyadir_producto(producto)
-        return f'Dato {producto} añadido al carrito', 200
+        return f'Producto: {producto} añadido al carrito', 200
     else:
-        return f'Dato {producto} ya incluido en el carrito', 409
+        return f'Prodcuto: {producto} ya incluido en el carrito', 409
 
+#-------------------------------------------------------------------------------#
 
 @app.route('/carrito/delete', methods=['DELETE'])  # elimina productos al carrito
 @jwt_required()  # solo los usuarios registrados pueden hacerlo
@@ -188,6 +199,8 @@ def eliminar_producto_carrito(producto):
     else:
         return f'Dato {producto} no exsiste en el carrito', 409
 
+#-----------------------------------------------------------------------------------#
+
 @app.route('/carrito', methods=['DELETE'])  #vacia el carrito
 @jwt_required()  # solo los usuarios registrados pueden hacerlo
 def vaciar_carrito(producto):
@@ -213,14 +226,45 @@ def vaciar_carrito(producto):
     else:
         return f'El carrito ya está vacío', 409
 
+#---------------------------------------------------------------------------------------#
+
+@app.route('/producto', methods=['GET'])  #genera factura producto
+def generar_factura_producto(producto):
+    """
+    Genera una factura del producto. Solo los usuarios que hayan iniciado sesión pueden
+    realizar esta acción
+
+    Comprueba que el usuario que ha iniciado sesión. Obtiene la informaión del
+    producto (nombre, precio, stock, volumen, peso, frágil)
+
+    :param producto:
+
+    :return:
+
+    -> Si la factura se ha generado exitosamente: 202
+    -> Si no se ha encontrado el producto: 409
+    """
+    factura = FacturaPDF()
+    try:
+        return factura.generar()
+    except KeyError:
+        return f'Producto no encontrado'
+
+#------------------------------------------------------------------------------------------#
+
 @app.route('/tienda', methods = ['POST'])
 @jwt_required()
 def añadir_producto_tienda():
     """
-    Añade producto a la tienda.
+    Añade producto a la tienda. (falta agregar que solo los Administradires puedan realizar esta acción)
 
     :return:
+
+    -> Si el producto se guardo correctamente, 202
+    -> Si el producto ya estaba en la tienda
     """
+    #COMPROBACIÓN ADMINSITRADOR
+
     tienda = Tienda()
     producto = Producto
 
@@ -230,6 +274,7 @@ def añadir_producto_tienda():
     else:
         return f'El producto ya se encontraba en la tienda', 409
 
+#------------------------------------------------------------------------------------------#
 
 if __name__ == '__main__':
     app.run(debug=True)
