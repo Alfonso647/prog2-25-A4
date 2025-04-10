@@ -8,7 +8,7 @@ Cuando se ejecuta:
 - Crea una nueva base de datos con la tabla de productos
 - Añade algunos productos de prueba para poder usar la API desde el principio
 
-Se debe ejecutar solo una vez al inicio, porque cada vez que ejecuteis se reincia, o sino quitadle la linea de db.dropall.
+Se ejecuta solo una vez al inicio, porque cada vez que ejecuteis se reincia la base de datos (borra all), o sino quitadle la linea de db.dropall.
 '''
 
 
@@ -16,7 +16,7 @@ from app import app, db
 from models import Producto
 
 with app.app_context():
-    db.drop_all()  # Esto borra todo si ya existía, útil para reiniciar limpio
+    db.drop_all()  # Esto borra all si ya existía, útil para reiniciar limpio
     db.create_all()
 
     #Productos de prueba
