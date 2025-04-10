@@ -205,6 +205,22 @@ def añadir_reseña():
     print(r.text)
 
 
+#---------------------------------------------------------------------------3
+
+def cerrar_sesion():
+    """
+    Cierre de la sesión (elimina el token)
+    :return:
+    -> Cierro de sesión exitoso (token removido), 202
+    -> Token ya esta en la base de datos, 400
+    """
+    global token
+    r = requests.delete(f'{URL}/logout/{jti}', headers= {'Authorization': 'Bearer ' + token})
+    print(r.status_code)
+    print(r.text)
+
+#--------------------------------------    -------------------------------------#
+
 def menu():
     while True:
         print("\n==MENU==")
