@@ -276,5 +276,17 @@ def añadir_producto_tienda():
 
 #------------------------------------------------------------------------------------------#
 
+@app.route('/carrito/ver', methods = ['GET'])
+@jwt_required()
+def ver_carrito():
+    """
+    Muestra toda la información del carrito
+    :return:
+    ->
+    ->
+    """
+    carrito = Carrito()
+    return print(carrito.carrito)
+
 if __name__ == '__main__':
     app.run(debug=True)

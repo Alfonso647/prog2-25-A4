@@ -186,7 +186,7 @@ def menu():
         print("6.Vaciar carrito")
         print("7.Añadir producto carrito")
         print("8.Eliminar producto carrito")
-        print("9. Generar factura")
+        print("9.Generar factura")
 
         choice = input('Enter your choice: ')
 
@@ -208,6 +208,7 @@ def menu():
         if choice == '4':
             info_producto()
 
-
+if __name__ = __'main__'
+    menu()
 
 
