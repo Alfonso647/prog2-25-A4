@@ -2,10 +2,9 @@ from fpdf import FPDF
 from datetime import datetime
 
 class FacturaPDF:
-    def __init__(self,cliente, carrito, factura_id,filename="factura.pdf"):
+    def __init__(self,cliente, carrito,filename="factura.pdf"):
         self.cliente = cliente
-        self.productos = carrito
-        self.factura_id = factura_id
+        self.carrito = carrito
         self.fecha = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
         self.filename = filename
         self.pdf = FPDF() #Creamos un objeto FPDF que es el documento donde escribiremos, pero no tiene hoja aún
@@ -20,7 +19,6 @@ class FacturaPDF:
         #Info de la factura
         self.pdf.set_font("Arial",size=12)
         self.pdf.ln(10)
-        self.pdf.cell(100,10, txt=f"Factura ID: {self.factura_id}")
         self.pdf.cell(0,10,txt=f"Fecha:{self.fecha}", ln=True)
 
         self.pdf.cell(100,10,txt=f"Cliente: {self.cliente}", ln=True)
@@ -34,12 +32,13 @@ class FacturaPDF:
         self.pdf.cell(40, 10, "Subtotal", border=1,ln=True)
 
         #Filas de productos
+        total=0
         self.pdf.set_font("Arial", size=12)
         for producto in self.carrito:
-            for nombre, cantidad in producto.items():
-                nombre=nombre.nombre
+            for producto_obj, cantidad in producto.items():
+                nombre=producto_obj.nombre
                 cantidad=cantidad
-                precio=nombre.precio
+                precio=producto_obj.precio
                 subtotal= cantidad*precio
                 total+=subtotal
 
