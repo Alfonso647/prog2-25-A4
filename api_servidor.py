@@ -164,14 +164,16 @@ def comprobar_token():
     conn.close()
     return token is not None
 
+#-------------------------------------------------------------------#
+
 @app.route("/logout", methods = ['DELETE'])
 @jwt_required()
 def cerrar_sesion()
     """
     Cierra sesión
     :return: 
-    ->
-    ->
+    -> 
+    -> 
     """
     jti = get_jwt()['jti']
     try:
@@ -180,7 +182,6 @@ def cerrar_sesion()
         return jsonify(msg='JWT revocado'), 200
     except sqlite3.IntegrityError:
         return 'Token ya añadido a la base de datos'
-
 
 #----------------------------------------------------------------------#
 
@@ -362,10 +363,6 @@ def añadir_reseña(producto,puntuación,comentario):
     return añadir_reseña(producto,puntuación,comentario)
 
 #--------------------------------------------------------------------------------------------#
-
-
-
-
 
 if __name__ == '__main__':
     app.run(debug=True)
