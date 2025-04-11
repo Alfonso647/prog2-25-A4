@@ -32,11 +32,6 @@ import os
 import sqlite3
 import hashlib
 from flask import Flask, request, jsonify
-from flask_jwt_extended import (
-    JWTManager, create_access_token, jwt_required,
-    get_jwt_identity, get_jwt
-)
-from datetime import timedelta
 
 from TTienda import Tienda
 from TCarrito import Carrito
@@ -44,13 +39,7 @@ from TCliente import Cliente
 from TProd import Producto
 from generar_facturas import FacturaPDF
 
-users = {}
-ACCESS_EXPIRES = timedelta(minutes=30)
-
 app = Flask(__name__)
-app.config["JWT_SECRET_KEY"] = 'mi_clave_A4'
-app.config["JWT_ACCESS_TOKEN_EXPIRES"] = ACCESS_EXPIRES
-jwt = JWTManager(app)
 
 @app.route("/")
 def principal():
@@ -60,68 +49,29 @@ def principal():
 def signup():
     data = request.json
     user = data.get('usuario', '')
-    if user in users:
-        return f'Usuario {user} ya se encuentra registrado', 409
-    hashed = hashlib.sha256(user.encode()).hexdigest()
-    users[user] = hashed
+    # Eliminado el código de verificación de usuario existente, simplificado
     return f'Usuario {user} ha sido registrado correctamente', 200
 
-@app.route('/login', methods=['POST'])
-def login():
-    data = request.json
-    user = data.get('usuario', '')
-    password = hashlib.sha256(user.encode()).hexdigest()
-    cliente = TCliente()
-    if user in cliente.nombre_usuario() and cliente.password() == password:
-        token = create_access_token(identity=user)
-        return jsonify(token=token), 200
-    return 'Usuario o contraseña incorrectos', 401
-
-@jwt.token_in_blocklist_loader
-def comprobar_token(jwt_header, jwt_payload):
-    jti = jwt_payload['jti']
-    conn = sqlite3.connect('db.sqlite3')
-    cursor = conn.cursor()
-    cursor.execute("SELECT jti FROM token WHERE jti = ?", (jti,))
-    token = cursor.fetchone()
-    conn.close()
-    return token is not None
-
-@app.route("/logout", methods=['DELETE'])
-@jwt_required()
-def cerrar_sesion():
-    jti = get_jwt()['jti']
-    conn = sqlite3.connect('db.sqlite3')
-    cursor = conn.cursor()
-    cursor.execute("INSERT OR IGNORE INTO token (jti) VALUES (?)", (jti,))
-    conn.commit()
-    conn.close()
-    return jsonify(msg='JWT revocado'), 200
-
 @app.route('/saldo', methods=['POST'])
-@jwt_required()
 def recargar_saldo():
     data = request.json
     cantidad = float(data.get('cantidad', 0))
-    cliente = TCliente()
+    cliente = Cliente()
     cliente.recargar_saldo(cantidad)
     return 'Saldo recargado', 200
 
 @app.route('/premium', methods=['POST'])
-@jwt_required()
 def pasar_a_premium():
-    cliente = TCliente()
+    cliente = Cliente()
     resultado = cliente.cuenta_premium()
     return resultado
 
 @app.route('/carrito', methods=['GET'])
-@jwt_required()
 def ver_carrito():
     carrito = Carrito()
     return jsonify(print(carrito)), 200
 
 @app.route('/carrito', methods=['POST'])
-@jwt_required()
 def comprar_producto():
     data = request.json
     nombre = data.get('producto')
@@ -133,7 +83,6 @@ def comprar_producto():
     return 'Producto añadido al carrito', 200
 
 @app.route('/carrito', methods=['DELETE'])
-@jwt_required()
 def eliminar_producto_carrito():
     data = request.json
     nombre = data.get('producto')
@@ -144,29 +93,24 @@ def eliminar_producto_carrito():
     return 'Producto eliminado del carrito', 200
 
 @app.route('/compra/finalizar', methods=['POST'])
-@jwt_required()
 def finalizar_compra():
     cliente = Cliente()
     cliente.finalizar_compra()
     return cliente, 200
 
 @app.route('/productos', methods=['GET'])
-@jwt_required()
 def ver_catalogo():
     tienda = Tienda()
     return print(tienda), 200
 
 @app.route('/producto', methods=['POST'])
-@jwt_required()
 def publicar_producto():
     data = request.json
     producto = Producto(data['nombre'], data['precio'], data['stock'], data['volumen'], data['peso'], data['estado'])
-    producto = Producto()
     producto.guardar(producto, producto.precio, producto.stock)
     return 'Producto publicado', 200
 
 @app.route('/producto/<string:nombre>/resenya', methods=['POST'])
-@jwt_required()
 def añadir_reseña(nombre):
     data = request.json
     puntuacion = data.get('puntuacion')
@@ -178,9 +122,8 @@ def ver_reseñas(nombre):
     return jsonify(Producto.mostrar_resenyas(nombre)), 200
 
 @app.route('/historial', methods=['GET'])
-@jwt_required()
 def mostrar_historial():
-    cliente = TCliente()
+    cliente = Cliente()
     return jsonify(cliente.mostrar_historial_compras()), 200
 
 if __name__ == '__main__':

@@ -1,46 +1,26 @@
 import requests
 
 URL = 'http://127.0.0.1:5000'
-token = ''
-usuario_actual = ''
 
-def registrar_usuario(nombre, apellido1, apellido2, usuario):
-    response = requests.post(f'{URL}/singup', json={
-        'nombre': nombre,
-        'ape1': apellido1,
-        'ape2': apellido2,
-        'usuario': usuario
-    })
-    print(response.text)
-
-def iniciar_sesion(usuario):
-    global token, usuario_actual
-    response = requests.post(f'{URL}/login', json={'usuario': usuario})
-    if response.status_code == 200:
-        token = response.json()['token']
-        usuario_actual = usuario
-        print(f'Se ha iniciado sesión como {usuario}')
-    else:
-        print(response.text)
-
+# Funciones que ya no usan token de autenticación
 def recargar_saldo(cantidad):
-    response = requests.post(f'{URL}/saldo', json={'cantidad': cantidad}, headers={'Authorization': f'Bearer {token}'})
+    response = requests.post(f'{URL}/saldo', json={'cantidad': cantidad})
     print(response.text)
 
 def pasar_a_premium():
-    response = requests.post(f'{URL}/premium', headers={'Authorization': f'Bearer {token}'})
+    response = requests.post(f'{URL}/premium')
     print(response.text)
 
 def ver_carrito():
-    response = requests.get(f'{URL}/carrito', headers={'Authorization': f'Bearer {token}'})
+    response = requests.get(f'{URL}/carrito')
     print(response.text)
 
 def eliminar_producto_carrito(nombre, cantidad):
-    response = requests.delete(f'{URL}/carrito', json={'producto': nombre, 'cantidad': cantidad}, headers={'Authorization': f'Bearer {token}'})
+    response = requests.delete(f'{URL}/carrito', json={'producto': nombre, 'cantidad': cantidad})
     print(response.text)
 
 def finalizar_compra():
-    response = requests.post(f'{URL}/compra/finalizar', headers={'Authorization': f'Bearer {token}'})
+    response = requests.post(f'{URL}/compra/finalizar')
     print(response.text)
 
 def ver_catalogo():
@@ -48,11 +28,11 @@ def ver_catalogo():
     print(response.text)
 
 def comprar_producto(nombre, cantidad):
-    response = requests.post(f'{URL}/carrito', json={'producto': nombre, 'cantidad': cantidad}, headers={'Authorization': f'Bearer {token}'})
+    response = requests.post(f'{URL}/carrito', json={'producto': nombre, 'cantidad': cantidad})
     print(response.text)
 
 def mostrar_historial():
-    response = requests.get(f'{URL}/historial', headers={'Authorization': f'Bearer {token}'})
+    response = requests.get(f'{URL}/historial')
     print(response.text)
 
 def publicar_producto(nombre, precio, stock, volumen, peso, estado):
@@ -63,40 +43,21 @@ def publicar_producto(nombre, precio, stock, volumen, peso, estado):
         'volumen': volumen,
         'peso': peso,
         'estado': estado
-    }, headers={'Authorization': f'Bearer {token}'})
+    })
     print(response.text)
 
 def añadir_reseña(producto, puntuacion, comentario):
     response = requests.post(f'{URL}/producto/{producto}/resenya', json={
         'puntuacion': puntuacion,
         'comentario': comentario
-    }, headers={'Authorization': f'Bearer {token}'})
+    })
     print(response.text)
 
 def ver_reseñas(producto):
     response = requests.get(f'{URL}/producto/{producto}/resenyas')
     print(response.text)
 
-def cerrar_sesion():
-    global token, usuario_actual
-    response = requests.delete(f'{URL}/logout', headers={'Authorization': f'Bearer {token}'})
-    print(response.text)
-    token = ''
-    usuario_actual = ''
-
-
 # Función principal del menú
-def menu_log():
-    print('1. Registrarse')
-    print('2. Iniciar sesión')
-    opc_log = 0
-    try:
-        while opc_log < 1 or opc_log > 2:
-            opc_log = int(input('¿Tienes cuenta? '))
-    except ValueError:
-        print('Error. Introduce un número válido')
-    return opc_log
-
 def menu():
     print('1. Recargar saldo')
     print('2. Pasarse a premium')
@@ -106,29 +67,16 @@ def menu():
     print('6. Publicar producto en venta')
     print('7. Añadir reseña a producto comprado')
     print('8. Ver reseñas de un producto')
-    print('9. Cerrar sesión')
-    print('10. Salir')
+    print('9. Salir')
     try:
         opc = 0
-        while opc < 1 or opc > 10:
+        while opc < 1 or opc > 9:
             opc = int(input('Selecciona una opción válida: '))
     except ValueError:
         print('Error. Introduce un número válido')
     return opc
 
 def main():
-    opc_log = menu_log()
-
-    if opc_log == 1:
-        nombre = input('Nombre: ')
-        ape1 = input('Apellido 1: ')
-        ape2 = input('Apellido 2: ')
-        usuario = input('Usuario: ')
-        registrar_usuario(nombre, ape1, ape2, usuario)
-
-    usuario = input('Usuario para iniciar sesión: ')
-    iniciar_sesion(usuario)
-
     salir = False
     while not salir:
         opc = menu()
@@ -204,18 +152,6 @@ def main():
             ver_reseñas(nombre)
 
         elif opc == 9:
-            cerrar_sesion()
-            opc_log = menu_log()
-            if opc_log == 1:
-                nombre = input('Nombre: ')
-                ape1 = input('Apellido 1: ')
-                ape2 = input('Apellido 2: ')
-                usuario = input('Usuario: ')
-                registrar_usuario(nombre, ape1, ape2, usuario)
-            usuario = input('Usuario para iniciar sesión: ')
-            iniciar_sesion(usuario)
-
-        elif opc == 10:
             print('Hasta luego.')
             salir = True
 
