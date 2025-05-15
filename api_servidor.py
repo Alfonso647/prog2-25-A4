@@ -28,103 +28,167 @@ Para inicializar la API:
 
 """
 
-import os
-import sqlite3
-import hashlib
 from flask import Flask, request, jsonify
-
-from TTienda import Tienda
-from TCarrito import Carrito
+from flask_jwt_extended import (
+    JWTManager, create_access_token, jwt_required, get_jwt_identity
+)
 from TCliente import Cliente
+from TCarrito import Carrito
 from TProd import Producto
+from TTienda import Tienda
 from generar_facturas import FacturaPDF
 
 app = Flask(__name__)
+app.config["JWT_SECRET_KEY"] = "mi_clave_A4"
+jwt = JWTManager(app)
+
 
 @app.route("/")
 def principal():
     return 'API de Productos funcionando correctamente'
 
+
 @app.route('/signup', methods=['POST'])
 def signup():
     data = request.json
-    user = data.get('usuario', '')
-    # Eliminado el código de verificación de usuario existente, simplificado
-    return f'Usuario {user} ha sido registrado correctamente', 200
+    username = data.get('usuario')
+    password = data.get('contrasena')
+
+    if not username or not password:
+        return jsonify({"error": "Faltan datos"}), 400
+
+    if Cliente.cargar(username):
+        return jsonify({"error": "Usuario ya existe"}), 409
+
+    nuevo = Cliente(nombre=username, contrasena=password)
+    nuevo.guardar()
+    return jsonify({"msg": f"Usuario {username} registrado correctamente"}), 201
+
+
+@app.route('/login', methods=['POST'])
+def login():
+    data = request.json
+    username = data.get('usuario')
+    password = data.get('contrasena')
+
+    cliente = Cliente.autenticar(username, password)
+    if not cliente:
+        return jsonify({"error": "Credenciales inválidas"}), 401
+
+    access_token = create_access_token(identity=username)
+    return jsonify(access_token=access_token), 200
+
 
 @app.route('/saldo', methods=['POST'])
+@jwt_required()
 def recargar_saldo():
     data = request.json
     cantidad = float(data.get('cantidad', 0))
-    cliente = Cliente()
+    username = get_jwt_identity()
+    cliente = Cliente.cargar(username)
     cliente.recargar_saldo(cantidad)
-    return 'Saldo recargado', 200
+    return jsonify({"msg": "Saldo recargado"}), 200
+
 
 @app.route('/premium', methods=['POST'])
+@jwt_required()
 def pasar_a_premium():
-    cliente = Cliente()
+    username = get_jwt_identity()
+    cliente = Cliente.cargar(username)
     resultado = cliente.cuenta_premium()
-    return resultado
+    return jsonify({"msg": resultado})
+
 
 @app.route('/carrito', methods=['GET'])
+@jwt_required()
 def ver_carrito():
-    carrito = Carrito()
-    return jsonify(print(carrito)), 200
+    username = get_jwt_identity()
+    cliente = Cliente.cargar(username)
+    carrito = cliente.carrito
+    return jsonify(carrito.mostrar_productos())
+
 
 @app.route('/carrito', methods=['POST'])
+@jwt_required()
 def comprar_producto():
     data = request.json
     nombre = data.get('producto')
     cantidad = data.get('cantidad')
+    username = get_jwt_identity()
+
+    cliente = Cliente.cargar(username)
     producto = Producto(nombre)
     producto.set_cantidad(cantidad)
-    carrito = Carrito()
-    carrito.anyadir_producto(producto)
-    return 'Producto añadido al carrito', 200
+    cliente.carrito.anyadir_producto(producto)
+    return jsonify({"msg": "Producto añadido al carrito"}), 200
+
 
 @app.route('/carrito', methods=['DELETE'])
+@jwt_required()
 def eliminar_producto_carrito():
     data = request.json
     nombre = data.get('producto')
-    cantidad = data.get('cantidad')
+    username = get_jwt_identity()
+
+    cliente = Cliente.cargar(username)
     producto = Producto(nombre)
-    carrito = Carrito()
-    carrito.eliminar_producto(producto)
-    return 'Producto eliminado del carrito', 200
+    cliente.carrito.eliminar_producto(producto)
+    return jsonify({"msg": "Producto eliminado del carrito"}), 200
+
 
 @app.route('/compra/finalizar', methods=['POST'])
+@jwt_required()
 def finalizar_compra():
-    cliente = Cliente()
+    username = get_jwt_identity()
+    cliente = Cliente.cargar(username)
     cliente.finalizar_compra()
-    return cliente, 200
+    return jsonify({"msg": "Compra finalizada"}), 200
+
 
 @app.route('/productos', methods=['GET'])
 def ver_catalogo():
     tienda = Tienda()
-    return print(tienda), 200
+    return jsonify(tienda.mostrar_productos())
+
 
 @app.route('/producto', methods=['POST'])
+@jwt_required()
 def publicar_producto():
     data = request.json
-    producto = Producto(data['nombre'], data['precio'], data['stock'], data['volumen'], data['peso'], data['estado'])
-    producto.guardar(producto, producto.precio, producto.stock)
-    return 'Producto publicado', 200
+    producto = Producto(
+        data['nombre'], data['precio'], data['stock'],
+        data['volumen'], data['peso'], data['estado']
+    )
+    producto.guardar(producto.precio, producto.stock)
+    return jsonify({"msg": "Producto publicado"}), 201
+
 
 @app.route('/producto/<string:nombre>/resenya', methods=['POST'])
+@jwt_required()
 def añadir_reseña(nombre):
     data = request.json
     puntuacion = data.get('puntuacion')
     comentario = data.get('comentario')
-    return Producto.anyadir_resenya(nombre, puntuacion, comentario), 200
+    Producto.anyadir_resenya(nombre, puntuacion, comentario)
+    return jsonify({"msg": "Reseña añadida"}), 200
+
 
 @app.route('/producto/<string:nombre>/resenyas', methods=['GET'])
 def ver_reseñas(nombre):
     return jsonify(Producto.mostrar_resenyas(nombre)), 200
 
+
 @app.route('/historial', methods=['GET'])
+@jwt_required()
 def mostrar_historial():
-    cliente = Cliente()
+    username = get_jwt_identity()
+    cliente = Cliente.cargar(username)
     return jsonify(cliente.mostrar_historial_compras()), 200
+
+
+if __name__ == '__main__':
+    app.run(debug=True)
+
 
 if __name__ == '__main__':
     app.run(debug=True)
