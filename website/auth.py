@@ -51,7 +51,7 @@ def singup():
             new_user = User(email=email, name=name, password=generate_password_hash(password1))
             db.session.add(new_user)
             db.session.commit()
-            login_user(user, True)
+            login_user(new_user, True)
             flash('Cuenta creada correctamente', category='success')
             return redirect('/login')
 
