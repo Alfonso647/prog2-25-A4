@@ -27,10 +27,11 @@ class Producto:
     productos_stock={}
     productos_precio={}
 
-    def __init__(self, nombre: str,precio: float,stock: int, volumen: float, peso: float, fragil: bool = False):
+    def __init__(self, nombre: str,precio: float,stock: int, volumen: float, peso: float, detalles: str, fragil: bool = False):
         self.nombre = nombre
         self.volumen = volumen
         self.peso = peso
+        self.detalles = detalles
         self.precio = precio
         self.fragil = fragil
         self.stock = stock

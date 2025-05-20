@@ -35,6 +35,6 @@ def crear_base_datos(app):
     if not path.exists('website/' + DB_NAME):
         with app.app_context():
             db.create_all()
-        print('Base de datos creada')
+            print('Base de datos creada')
 
 

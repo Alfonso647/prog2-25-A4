@@ -1,4 +1,23 @@
-{% extends "base.html" %} {% block title %}Amazing{% endblock %}
+{% extends "base.html" %}
+{% block title %}Amazing{% endblock %}
+
 {% block contenido %}
 <h1>Página Principal</h1>
+
+<h2>Productos disponibles</h2>
+<div class="row">
+  {% for producto in productos %}
+    <div class="col-md-4 mb-4">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">{{ producto.nombre }}</h5>
+          <p class="card-text">Precio: €{{ producto.precio }}</p>
+          <p class="card-text">Stock: {{ producto.stock }}</p>
+        </div>
+      </div>
+    </div>
+  {% else %}
+    <p>No hay productos disponibles.</p>
+  {% endfor %}
+</div>
 {% endblock %}
