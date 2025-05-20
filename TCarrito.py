@@ -24,11 +24,8 @@ class Carrito:
     vaciar_carrito()
         vacía el carrito por completo
     '''
-    def __init__(self,nombre):
-        self.carrito = {}
-        self.nombre = nombre
 
-    def anyadir_producto(self, producto: Producto, cantidad: int):
+    def anyadir_producto(self, producto: Producto):
         '''Añade un producto al carrito
 
         Parámetros
@@ -40,11 +37,11 @@ class Carrito:
             la cantidad debe ser positiva para que no salte un error
             además, debe haber stock de ese producto para que se pueda añadir
         '''
-        if cantidad <= 0:
-            print('Error: La cantidad debe ser positiva')
-            return
+        #if cantidad <= 0:
+            #print('Error: La cantidad debe ser positiva')
+            #return
 
-        if producto.nombre not in Tienda.productos:
+        if producto.nombre not in Tienda.productos
             print('Error: El producto no existe en la tienda')
             return
 

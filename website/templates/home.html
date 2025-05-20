@@ -13,6 +13,14 @@
           <h5 class="card-title">{{ producto.nombre }}</h5>
           <p class="card-text">Precio: €{{ producto.precio }}</p>
           <p class="card-text">Stock: {{ producto.stock }}</p>
+
+          <!-- Botón Ver Detalles -->
+          <a href="{{ url_for('views.producto_detalle', producto_id=producto.id) }}" class="btn btn-primary mb-2">Ver detalles</a>
+
+          <!-- Botón Añadir al carrito -->
+          <form action="{{ url_for('views.anadir_carrito', producto_id=producto.id) }}" method="POST" style="display:inline;">
+            <button type="submit" class="btn btn-success">Añadir al carrito</button>
+          </form>
         </div>
       </div>
     </div>
