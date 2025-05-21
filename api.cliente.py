@@ -14,7 +14,7 @@ def registrarse():
     })
 
     print(respuesta.json().get('mensaje', 'Error desconocido'))
-
+j
 def iniciar_sesion():
     global token_actual
     print("🔐 Iniciar sesión")
