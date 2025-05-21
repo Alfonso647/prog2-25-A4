@@ -5,26 +5,26 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c5d68f3e-7eb4-4b58-8087-820805a98cd2" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/TCarrito2.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/clases/TCliente.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/clases/TPersona.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/clases/TProducto.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/clases/TResena.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/clases/TTienda.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/clases/TVentaProducto.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/clases/example.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/ejercicio_github.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/ejercicio_github.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TCarrito.py" beforeDir="false" afterPath="$PROJECT_DIR$/clases/TCarrito.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TCliente.py" beforeDir="false" afterPath="$PROJECT_DIR$/TCliente2.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TMain.py" beforeDir="false" afterPath="$PROJECT_DIR$/TMain2.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TProd.py" beforeDir="false" afterPath="$PROJECT_DIR$/TProd2.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TTienda.py" beforeDir="false" afterPath="$PROJECT_DIR$/TTienda2.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/api_servidor.py" beforeDir="false" afterPath="$PROJECT_DIR$/api_servidor.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/website/productos_db.py" beforeDir="false" afterPath="$PROJECT_DIR$/website/productos_db.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/website/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/website/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/entorno_prog/bin/pip" beforeDir="false" afterPath="$PROJECT_DIR$/entorno_prog/bin/pip" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/entorno_prog/bin/pip3" beforeDir="false" afterPath="$PROJECT_DIR$/entorno_prog/bin/pip3" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/entorno_prog/bin/pip3.12" beforeDir="false" afterPath="$PROJECT_DIR$/entorno_prog/bin/pip3.12" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/website/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/website/auth.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/website/main.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/website/models.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/website/productos_db.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/website/templates/add_db.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/website/templates/base.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/website/templates/carrito.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/website/templates/detalles_productos.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/website/templates/home.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/website/templates/login.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/website/templates/sign_up.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/website/views.py" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -94,6 +94,7 @@
     "Python.models.executor": "Run",
     "Python.productos_db.executor": "Run",
     "Python.tienda_db.executor": "Run",
+    "Python.views.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
     "git-widget-placeholder": "api",
@@ -107,7 +108,12 @@
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
-  <component name="RunManager" selected="Python.main">
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/website" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Python.api_servidor">
     <configuration name="TCarrito" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="ejercicio_github" />
       <option name="ENV_FILES" value="" />
@@ -144,28 +150,6 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/clases/TCliente.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
-    <configuration name="TVentaProducto" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
-      <module name="ejercicio_github" />
-      <option name="ENV_FILES" value="" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/clases" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/clases/TVentaProducto.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -242,21 +226,43 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <configuration name="views" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="ejercicio_github" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/website" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/website/views.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <list>
       <item itemvalue="Python.api_servidor" />
+      <item itemvalue="Python.views" />
       <item itemvalue="Python.TCarrito" />
       <item itemvalue="Python.TCliente" />
-      <item itemvalue="Python.TVentaProducto" />
       <item itemvalue="Python.example" />
       <item itemvalue="Python.main" />
     </list>
     <recent_temporary>
       <list>
         <item itemvalue="Python.main" />
+        <item itemvalue="Python.views" />
         <item itemvalue="Python.example" />
         <item itemvalue="Python.TCarrito" />
         <item itemvalue="Python.TCliente" />
-        <item itemvalue="Python.TVentaProducto" />
       </list>
     </recent_temporary>
   </component>

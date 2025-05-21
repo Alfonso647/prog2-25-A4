@@ -1,4 +1,4 @@
-#!/home/prog2/Documentos/GitHub/prog2-25-A4/entorno_prog/bin/python3
+#!/home/prog2/Documentos/GitHub/prog2-25-A4/entorno_prog/bin/python
 # -*- coding: utf-8 -*-
 import re
 import sys
