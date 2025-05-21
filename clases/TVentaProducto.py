@@ -34,5 +34,5 @@ def poner_producto_en_venta(cliente: Cliente, nombre: str, precio: float, stock:
     producto = Producto(nombre, precio, stock, volumen, peso, fragil, estado)
     cliente.productos_en_venta.append(producto)
     Tienda.nuevo_producto(producto)
-    print(f"Producto '{nombre}' ({estado}) publicado con éxito por {cliente.nombre_usuario}.")
+    #print(f"Producto '{nombre}' ({estado}) publicado con éxito por {cliente.nombre}.")
     return producto

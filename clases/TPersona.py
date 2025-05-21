@@ -1,6 +1,6 @@
 class Persona:
     """
-    Clase base para representar a una persona del sistema
+    Clase base para representar a una persona del sistema.
     """
     def __init__(self, nombre: str, contrasenya: str):
         self.nombre = nombre
