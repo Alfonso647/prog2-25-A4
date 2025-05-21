@@ -4,12 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c5d68f3e-7eb4-4b58-8087-820805a98cd2" name="Changes" comment="dwd">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+    <list default="true" id="c5d68f3e-7eb4-4b58-8087-820805a98cd2" name="Changes" comment="Nuevo api cliente y servidor. También se ha añadido la base de datos.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/api.cliente.py" beforeDir="false" afterPath="$PROJECT_DIR$/api.cliente.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api_servidor.py" beforeDir="false" afterPath="$PROJECT_DIR$/api_servidor.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/crear_db.py" beforeDir="false" afterPath="$PROJECT_DIR$/crear_db.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -304,7 +301,31 @@
       <option name="project" value="LOCAL" />
       <updated>1747851737318</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="dwd">
+      <option name="closed" value="true" />
+      <created>1747856320228</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1747856320228</updated>
+    </task>
+    <task id="LOCAL-00003" summary="dwd">
+      <option name="closed" value="true" />
+      <created>1747856324896</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1747856324896</updated>
+    </task>
+    <task id="LOCAL-00004" summary="Nuevo api cliente y servidor. También se ha añadido la base de datos.">
+      <option name="closed" value="true" />
+      <created>1747856379989</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1747856379989</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -322,7 +343,9 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
+    <MESSAGE value="Nueva api cliente y servidor. También se ha añadido la base de datos." />
     <MESSAGE value="dwd" />
-    <option name="LAST_COMMIT_MESSAGE" value="dwd" />
+    <MESSAGE value="Nuevo api cliente y servidor. También se ha añadido la base de datos." />
+    <option name="LAST_COMMIT_MESSAGE" value="Nuevo api cliente y servidor. También se ha añadido la base de datos." />
   </component>
 </project>
