@@ -22,7 +22,7 @@ class Carrito:
     calcular_total()
         calcula en total y más el envío
     vaciar_carrito()
-        vacía el carrito por completo
+        vacía el carrito por completo.
     '''
 
 

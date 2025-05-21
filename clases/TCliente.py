@@ -9,7 +9,7 @@ from TPersona import Persona
 class Cliente(Persona):
     """
     Representa un cliente del sistema con funcionalidades
-    de compra, venta y reseñas.
+    de compra, venta y reseñas
     """
 
     def __init__(self, nombre: str, apellido1: str, apellido2: str, nombre_usuario: str, saldo: float = 0.0):

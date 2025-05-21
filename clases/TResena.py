@@ -1,7 +1,7 @@
 
 class Resenya:
     """
-    Clase que representa una reseña de un producto.
+    Clase que representa una reseña de un producto
 
     Atributos
     ----------

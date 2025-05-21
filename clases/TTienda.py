@@ -3,7 +3,7 @@ import TProducto
 
 class Tienda:
     '''
-    Clase que representa la tienda online
+    Clase que representa la tienda online.
 
     Atributos
     ---------

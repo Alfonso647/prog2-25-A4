@@ -75,7 +75,7 @@ class Producto:
         comentario : str
             Comentario textual sobre el producto.
         cliente : Cliente, optional
-            Objeto cliente que hizo la reseña (si se desea guardar también en su historial).
+            Objeto cliente que hizo la reseña (si se desea guardar también en su historial)
 
        """
         try:
