@@ -10,7 +10,9 @@ db = SQLAlchemy(app)
 class Usuario(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     nombre_usuario = db.Column(db.String(80), unique=True, nullable=False)
-    contraseña = db.Column(db.String(120), nullable=False)
+    contrasenya = db.Column(db.String(120), nullable=False)
+    saldo = db.Column(db.Float, default=0.0)
+
 
 with app.app_context():
     db.create_all()

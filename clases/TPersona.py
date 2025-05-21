@@ -5,4 +5,3 @@ class Persona:
     def __init__(self, nombre: str, contrasenya: str):
         self.nombre = nombre
         self.contrasenya = contrasenya
-
