@@ -41,7 +41,7 @@ class Carrito:
             #print('Error: La cantidad debe ser positiva')
             #return
 
-        if producto.nombre not in Tienda.productos
+        if producto.nombre not in Tienda.productos:
             print('Error: El producto no existe en la tienda')
             return
 
