@@ -80,6 +80,7 @@ def main():
             print('\n')
 
         elif opc == 3:
+            print(f'Saldo: {client.saldo}')
             print(client.carrito)
             print('1. Eliminar producto')
             print('2. Finalizar compra')
@@ -96,9 +97,18 @@ def main():
                     else:
 
 
-                        if prod_elim in Carrito.carrito.keys:
-                            prod_elim = Tienda.producto_clase[prod_elim]
-                            client.eliminar_producto(prod_elim, cant_elim)
+                        if prod_elim in [p.nombre for p in client.carrito.carrito.keys()]:
+
+                            producto_a_eliminar = ''
+                            for producto in client.carrito.carrito.keys():
+                                if producto.nombre == prod_elim:
+                                    producto_a_eliminar = producto
+                                    break  # (cuando encontramos el producto salimos del bucle)
+
+                            if producto_a_eliminar != '':
+                                client.eliminar_producto(producto_a_eliminar, cant_elim)
+                            else:
+                                print("Producto no encontrado en el carrito.")
                         else:
                             print('Error. Introduce un producto válido')
 
@@ -135,7 +145,8 @@ def main():
                     except ValueError:
                         print('Error. Introduce los datos correctamente')
                     else:
-                        if prod_any in Producto.productos_stock.keys():
+                        if prod_any in Tienda.producto_clase.keys():
+                            # el producto del que hemos escrito solo el nombre pasa a ser el producto del diccionario
                             prod_any = Tienda.producto_clase[prod_any]
                             client.comprar_producto(prod_any, cant_any)
                         else:
@@ -155,20 +166,44 @@ def main():
             print('\n')
 
         elif opc == 6:
-            print('--- Publicar producto en venta ---')
-            try:
-                nombre = input('Nombre del producto: ')
-                precio = float(input('Precio (€): '))
-                stock = int(input('Cantidad en stock: '))
-                volumen = float(input('Volumen (cm³): '))
-                peso = float(input('Peso (g): '))
-                estado = input('Estado del producto ("nuevo" o "segunda mano"): ').lower()
-                if estado not in ["nuevo", "segunda mano"]:
-                    raise ValueError("Estado inválido. Debe ser 'nuevo' o 'segunda mano'.")
-                client.vender_producto(nombre, precio, stock, volumen, peso, estado)
-            except Exception as e:
-                print(f"Error al añadir producto: {e}")
-            print('\n')
+            print('Publicar producto en venta')
+
+            nombre = input('Nombre del producto: ').lower()
+
+            if nombre in Tienda.producto_clase.keys():
+                try:
+                    cant_extra=int(input(f'Este producto está en la tienda a {Tienda.productos_precio[nombre]}'
+                                    f'€ y hay un stock de {Tienda.productos[nombre]}. '
+                                    f'¿Cuántos más deseas introducir? '))
+
+
+                    if cant_extra > 0:
+                        #prod_extra será el producto al que añadiremos stock extra
+                        prod_extra = Tienda.producto_clase[nombre]
+                        prod_extra.stock += cant_extra
+                        Tienda.productos[nombre] = prod_extra.stock
+                        print(f'Ahora hay {Tienda.productos[nombre]} unidades de {nombre} en la tienda.')
+                    else:
+                        print("Error: La cantidad debe ser positiva.")
+
+                except ValueError:
+                    print('Error. Introduce los datos correctamente')
+
+            else:
+                try:
+                    precio = float(input('Precio (€): '))
+                    stock = int(input('Cantidad en stock: '))
+                    volumen = float(input('Volumen (cm³): '))
+                    peso = float(input('Peso (g): '))
+                    estado = input('Estado del producto ("nuevo" o "segunda mano"): ').lower()
+
+                    if estado not in ["nuevo", "segunda mano"]:
+                        raise ValueError("Estado inválido. Debe ser 'nuevo' o 'segunda mano'.")
+                    client.vender_producto(nombre, precio, stock, volumen, peso, estado)
+
+                except Exception as e:
+                    print(f"Error al añadir producto: {e}")
+                    print('\n')
 
         elif opc == 7:
             print('Añadir reseña a producto comprado')

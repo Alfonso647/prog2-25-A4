@@ -8,23 +8,8 @@
       <change beforePath="$PROJECT_DIR$/.idea/ejercicio_github.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/ejercicio_github.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api_servidor.py" beforeDir="false" afterPath="$PROJECT_DIR$/api_servidor.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/entorno_prog/bin/pip" beforeDir="false" afterPath="$PROJECT_DIR$/entorno_prog/bin/pip" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/entorno_prog/bin/pip3" beforeDir="false" afterPath="$PROJECT_DIR$/entorno_prog/bin/pip3" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/entorno_prog/bin/pip3.12" beforeDir="false" afterPath="$PROJECT_DIR$/entorno_prog/bin/pip3.12" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/website/__init__.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/website/auth.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/website/main.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/website/models.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/website/productos_db.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/website/templates/add_db.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/website/templates/base.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/website/templates/carrito.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/website/templates/detalles_productos.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/website/templates/home.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/website/templates/login.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/website/templates/sign_up.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/website/views.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/clases/TCarrito.py" beforeDir="false" afterPath="$PROJECT_DIR$/clases/TCarrito.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/clases/example.py" beforeDir="false" afterPath="$PROJECT_DIR$/clases/example.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -72,48 +57,48 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "Python.TCarrito.executor": "Run",
-    "Python.TCliente.executor": "Run",
-    "Python.TMain.executor": "Run",
-    "Python.TPersona.executor": "Run",
-    "Python.TProd.executor": "Run",
-    "Python.TProducto.executor": "Run",
-    "Python.TResena.executor": "Run",
-    "Python.TTienda.executor": "Run",
-    "Python.TVentaProducto.executor": "Run",
-    "Python.add_db.executor": "Run",
-    "Python.api.cliente.executor": "Run",
-    "Python.api.executor": "Run",
-    "Python.api_servidor.executor": "Debug",
-    "Python.example.executor": "Run",
-    "Python.main (1).executor": "Run",
-    "Python.main.executor": "Run",
-    "Python.models.executor": "Run",
-    "Python.productos_db.executor": "Run",
-    "Python.tienda_db.executor": "Run",
-    "Python.views.executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "api",
-    "last_opened_file_path": "/home/prog2/Documentos/GitHub/prog2-25-A4",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "configurable.group.project",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;Python.TCarrito.executor&quot;: &quot;Run&quot;,
+    &quot;Python.TCliente.executor&quot;: &quot;Run&quot;,
+    &quot;Python.TMain.executor&quot;: &quot;Run&quot;,
+    &quot;Python.TPersona.executor&quot;: &quot;Run&quot;,
+    &quot;Python.TProd.executor&quot;: &quot;Run&quot;,
+    &quot;Python.TProducto.executor&quot;: &quot;Run&quot;,
+    &quot;Python.TResena.executor&quot;: &quot;Run&quot;,
+    &quot;Python.TTienda.executor&quot;: &quot;Run&quot;,
+    &quot;Python.TVentaProducto.executor&quot;: &quot;Run&quot;,
+    &quot;Python.add_db.executor&quot;: &quot;Run&quot;,
+    &quot;Python.api.cliente.executor&quot;: &quot;Run&quot;,
+    &quot;Python.api.executor&quot;: &quot;Run&quot;,
+    &quot;Python.api_servidor.executor&quot;: &quot;Debug&quot;,
+    &quot;Python.example.executor&quot;: &quot;Run&quot;,
+    &quot;Python.main (1).executor&quot;: &quot;Run&quot;,
+    &quot;Python.main.executor&quot;: &quot;Run&quot;,
+    &quot;Python.models.executor&quot;: &quot;Run&quot;,
+    &quot;Python.productos_db.executor&quot;: &quot;Run&quot;,
+    &quot;Python.tienda_db.executor&quot;: &quot;Run&quot;,
+    &quot;Python.views.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;api&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/home/prog2/Documentos/GitHub/prog2-25-A4&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;configurable.group.project&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/website" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.api_servidor">
+  <component name="RunManager" selected="Python.example">
     <configuration name="TCarrito" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="ejercicio_github" />
       <option name="ENV_FILES" value="" />
@@ -128,28 +113,6 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/clases/TCarrito.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
-    <configuration name="TCliente" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
-      <module name="ejercicio_github" />
-      <option name="ENV_FILES" value="" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/clases" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/clases/TCliente.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -204,6 +167,28 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <configuration name="main (1)" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="ejercicio_github" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/main.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <configuration name="main" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="ejercicio_github" />
       <option name="ENV_FILES" value="" />
@@ -250,19 +235,19 @@
     </configuration>
     <list>
       <item itemvalue="Python.api_servidor" />
+      <item itemvalue="Python.main (1)" />
       <item itemvalue="Python.views" />
       <item itemvalue="Python.TCarrito" />
-      <item itemvalue="Python.TCliente" />
       <item itemvalue="Python.example" />
       <item itemvalue="Python.main" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.main" />
-        <item itemvalue="Python.views" />
         <item itemvalue="Python.example" />
         <item itemvalue="Python.TCarrito" />
-        <item itemvalue="Python.TCliente" />
+        <item itemvalue="Python.main (1)" />
+        <item itemvalue="Python.main" />
+        <item itemvalue="Python.views" />
       </list>
     </recent_temporary>
   </component>

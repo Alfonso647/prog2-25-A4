@@ -41,7 +41,7 @@ class Cliente(Persona):
         """Recarga saldo del cliente si la cantidad es válida (>0)."""
         if cantidad > 0:
             self.saldo += cantidad
-            print(f'Se han anyadido {cantidad}€. Saldo total: {self.saldo}€')
+            print(f'Se han añadido {cantidad}€. Saldo total: {self.saldo}€')
         else:
             print('Error: La cantidad debe ser mayor que 0')
 
