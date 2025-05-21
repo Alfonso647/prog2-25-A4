@@ -1,40 +1,17 @@
-'''
-crear_db.py
+from flask_sqlalchemy import SQLAlchemy
+from flask import Flask
 
-Este archivo se usa para crear la base de datos de la tienda y
-añadir productos, ya sea de prueba o desde un historial de compras.
+app = Flask(__name__)
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///base_de_datos.db'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
-Contiene:
-- Una función para crear la base de datos y las tablas
-- Una función para guardar productos desde un historial de compras
-'''
+db = SQLAlchemy(app)
 
-from app import app, db
-from models import Producto
+class Usuario(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    nombre_usuario = db.Column(db.String(80), unique=True, nullable=False)
+    contraseña = db.Column(db.String(120), nullable=False)
 
-def crear_base():
-    '''Crea la base de datos y las tablas (borra si ya existían).'''
-    with app.app_context():
-        db.drop_all()
-        db.create_all()
-        print("✔️ Base de datos creada.")
-
-def guardar_compras_en_db(historial_compras):
-    '''
-    Guarda los productos comprados en la base de datos a partir del historial.
-    Cada clave del diccionario es un objeto Producto, y el valor es la cantidad comprada.
-    '''
-    with app.app_context():
-        for producto, cantidad in historial_compras.items():
-            nuevo_producto = Producto(
-                nombre=producto.nombre,
-                precio=producto.precio,
-                stock=cantidad,
-                volumen=producto.volumen,
-                peso=producto.peso,
-                fragil=producto.fragil
-            )
-            db.session.add(nuevo_producto)
-
-        db.session.commit()
-        print("Compras guardadas en la base de datos.")
+with app.app_context():
+    db.create_all()
+    print("✅ Base de datos creada correctamente.")
