@@ -12,17 +12,17 @@ class Cliente(Persona):
     de compra, venta y reseñas
     """
 
-    def __init__(self, nombre: str, apellido1: str, apellido2: str, nombre_usuario: str, saldo: float = 0.0):
-        super().__init__(nombre, apellido1, apellido2, nombre_usuario)
+    def __init__(self, nombre: str, contrasenya: str, saldo: float = 0.0):
+        super().__init__(nombre, contrasenya)
         self.saldo = saldo
         self.cuenta_premium = False
         self.historial_compras = {}
-        self.carrito = Carrito(f'Carrito de {self.nombre_usuario}')
+        self.carrito = Carrito(f'Carrito de {self.nombre}')
         self.productos_en_venta = []
         self.resenyas_realizadas = []
 
     def __str__(self) -> str:
-        return f'Usuario: {self.nombre_usuario}, saldo: {self.saldo}€'
+        return f'Usuario: {self.nombre}, saldo: {self.saldo}€'
 
     def cuenta_a_premium(self):
         """Convierte la cuenta del cliente en premium si tiene saldo suficiente."""
@@ -91,8 +91,8 @@ class Cliente(Persona):
         try:
             if not (0 <= puntuacion <= 10):
                 raise ValueError("La puntuación debe estar entre 0 y 10.")
-            resenya = Resenya(self.nombre_usuario, puntuacion, comentario)
-            producto.anyadir_resenya(self.nombre_usuario, puntuacion, comentario)
+            resenya = Resenya(self.nombre, puntuacion, comentario)
+            producto.anyadir_resenya(self.nombre, puntuacion, comentario)
             self.resenyas_realizadas.append(resenya)
             print("Reseña añadida con éxito.")
         except Exception as e:

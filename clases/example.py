@@ -39,18 +39,16 @@ def main():
     client = None
 
     if opc_log == 1:
-        nombre = input('Introduce tu nombre: ')
-        ape1 = input('Introduce tu primer apellido: ')
-        ape2 = input('Introduce tu segundo apellido: ')
-        usuario = input('Introduce tu nombre de usuario: ')
-        client = Cliente(nombre, ape1, ape2, usuario)
+        nombre = input('Introduce tu nombre de usuario: ')
+        contrasenya = input('Introduce tu contraseña: ')
+        client = Cliente(nombre, contrasenya)
         print(client)
         print('\n')
 
     elif opc_log == 2:
-        usuario = input('Introduce tu nombre de usuario: ')
-        client = Cliente("Nombre", "Apellido1", "Apellido2", usuario)
-        print(f'Se ha iniciado sesión como {usuario}')
+        nombre = input('Introduce tu nombre de usuario: ')
+        client = Cliente("Nombre", "Apellido1", "Apellido2", nombre)
+        print(f'Se ha iniciado sesión como {nombre}')
         print('\n')
 
     salir = False
@@ -116,10 +114,10 @@ def main():
 
                 elif opc_car == 2:
                     #He modificado esta parte para agregar la funcionalidad de generar factura
-                    #factura=client.finalizar_compra()
+                    factura=client.finalizar_compra()
                     #if factura == 's':
                         #generar_factura(client.carrito)
-                    print('facutra')
+
 
 
                 else:
