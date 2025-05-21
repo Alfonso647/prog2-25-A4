@@ -1,5 +1,5 @@
 from typing import Union
-from TProd import Producto
+from TProducto import Producto
 from TTienda import Tienda
 
 
@@ -25,7 +25,14 @@ class Carrito:
         vacía el carrito por completo
     '''
 
-    def anyadir_producto(self, producto: Producto):
+
+    def __init__(self,nombre):
+        self.carrito = {}
+        self.nombre = nombre
+
+
+
+    def anyadir_producto(self, producto: Producto, cantidad: int):
         '''Añade un producto al carrito
 
         Parámetros
@@ -37,9 +44,9 @@ class Carrito:
             la cantidad debe ser positiva para que no salte un error
             además, debe haber stock de ese producto para que se pueda añadir
         '''
-        #if cantidad <= 0:
-            #print('Error: La cantidad debe ser positiva')
-            #return
+        if cantidad <= 0:
+            print('Error: La cantidad debe ser positiva')
+            return
 
         if producto.nombre not in Tienda.productos:
             print('Error: El producto no existe en la tienda')
@@ -104,7 +111,7 @@ class Carrito:
 
         envio = 0
         for producto in self.carrito.keys():
-            envio += producto.peso * 0.001 + producto.volumen * 0.001
+            envio += producto.peso + producto.volumen
 
         return total, envio
 
@@ -120,9 +127,8 @@ class Carrito:
         total, envio = self.calcular_total()
         if self.carrito != False:
             resultado += f'El total a pagar es {round(total,2)}€.\n'
-            resultado += f'El precio del envío es de {round(envio)}€'
+            resultado += f'El precio del envío es de {round(envio,2)}€'
         else:
             resultado += f'El carrito está vacío'
 
         return resultado
-

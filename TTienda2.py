@@ -1,10 +1,11 @@
-import random
+'''
 
+import random
 from TProd import Producto
 
 
 class Tienda:
-    '''
+
     Clase que representa la tienda online
     Atributos
     ---------
@@ -19,7 +20,6 @@ class Tienda:
         añade un nuevo producto a la tienda
     reponer_stock() metodo de clase
         añade a todos los productos un número aletorio de unidades
-    '''
 
     def __str__(self) ->str:
         res = ''
@@ -34,3 +34,4 @@ class Tienda:
             cls.productos[nombre] += random.randint(25,40)
 
         print('Se han repuesto unidades')
+'''

@@ -1,5 +1,7 @@
+'''
+
 class Producto:
-    '''
+
     Clase que representa un producto
     Atributos
     ----------
@@ -22,7 +24,7 @@ class Producto:
         inicializa la clase y además añade el producto creado a la tienda online, de manera que siempre que se
         cree un producto de añadira a la tienda
 
-    '''
+
     
     productos_stock={}
     productos_precio={}
@@ -37,10 +39,10 @@ class Producto:
         self.stock = stock
 
         self.guardar(self.nombre, self.precio, self.stock)
-        '''
+
         Este método guarda el stock y el precio de un producto, ya que luego lo utilizaremos
         
-        '''
+
         
     def guardar(cls, nombre, precio, stock):
         cls.productos_stock[nombre] = stock
@@ -54,3 +56,4 @@ class Producto:
         cad += f'{sn} es frágil'
 
         return cad
+'''

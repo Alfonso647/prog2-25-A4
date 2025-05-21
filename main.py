@@ -1,7 +1,7 @@
-from TTienda import Tienda
-from TCliente import Cliente
-from TCarrito import Carrito
-from TProd import Producto
+from TTienda2 import Tienda
+from TCliente2 import Cliente
+from TCarrito2 import Carrito
+from TProd2 import Producto
 
 #Este menú es lo primero que aparece y en el que introduces tu cuenta. Te registras si es nueva e inicias sesión si hay una con los mismos datos que la ya creada. Ambas te llevan al menú, 
 def menu_log():
@@ -53,8 +53,9 @@ def main():
         ape1=input('Introduce tu primer apellido: ')
         ape2=input('Introduce tu segundo apellido: ')
         usuario=input('Introduce tu nombre de usuario: ')
+        contrasena=input('Introduce tu contraseña: ')
 
-        client = Cliente(nombre, ape1, ape2, usuario)
+        client = Cliente(nombre, ape1, ape2, usuario, contrasena)
 
         print(client)
         print('\n')
@@ -127,9 +128,28 @@ def main():
                     print('Has salido del carrito')
             print('\n')
 
-        
-        elif opc==4:
-            print('Ver catálogo de productos') #ponerlo bien !! para esto igual se necesita la api no estoy seguro
+
+        elif opc == 4:
+            print('Ver catálogo de productos:')
+
+            print(Tienda())
+
+            print('1. Añadir producto')
+            print('2. Volver')
+            try:
+                opc_tie = int(input('Selecciona una opción: '))
+                if opc_tie == 1:
+                    prod_any = str(input('Introduce el nombre del producto a añadir: '))
+                    cant_any = int(input('Introduce la cantidad de este producto a añadir: '))
+                    prod_any = Tienda.producto_clase[prod_any]
+                    client.comprar_producto(prod_any, cant_any)
+                else:
+                    print('Has salido del carrito')
+
+            except ValueError:
+                print('Error. Introduce un número válido')
+            print('\n')
+
             print('\n')
         
         #Esta opción simplemente muestra el historial de compras

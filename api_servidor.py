@@ -32,10 +32,10 @@ from flask import Flask, request, jsonify
 from flask_jwt_extended import (
     JWTManager, create_access_token, jwt_required, get_jwt_identity
 )
-from TCliente import Cliente
-from TCarrito import Carrito
-from TProd import Producto
-from TTienda import Tienda
+from TCliente2 import Cliente
+from TCarrito2 import Carrito
+from TProd2 import Producto
+from TTienda2 import Tienda
 from generar_facturas import FacturaPDF
 
 app = Flask(__name__)

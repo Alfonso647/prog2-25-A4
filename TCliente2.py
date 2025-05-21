@@ -1,3 +1,6 @@
+
+'''
+
 import sqlite3
 from TCarrito import Carrito
 from TTienda import Producto, Tienda
@@ -18,7 +21,7 @@ class Cliente(Persona):
         self.saldo = saldo
         self.cuenta_premium = False
         self.historial_compras = {}
-        self.carrito = Carrito(f'Carrito de {self.nombre_usuario}')
+        self.carrito = Carrito(nombre)
 
     def __str__(self) -> str:
         return f'Usuario: {self.nombre_usuario}, saldo: {self.saldo}€'
@@ -101,3 +104,4 @@ class Cliente(Persona):
             return cliente
         else:
             return None
+'''

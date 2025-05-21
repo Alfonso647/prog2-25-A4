@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, session, flash, redirect, url_for
 from flask_login import login_required, current_user
 from website.productos_db import Producto2
-from TCarrito import Carrito
+from TCarrito2 import Carrito
 
 
 views = Blueprint('views',__name__)

@@ -16,7 +16,7 @@ class Producto2(db.Model):
     def __str__(self):
         return f"{self.nombre} - Precio: {self.precio}€, Stock: {self.stock}"
 
-    # Método opcional para mostrar detalles más extensos
+    # Metodo opcional para mostrar detalles más extensos
     def mostrar_detalles(self):
         fragil_str = "Sí" if self.fragil else "No"
         return (f"Nombre: {self.nombre}\n"
