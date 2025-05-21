@@ -40,6 +40,33 @@ def cerrar_sesion():
     token_actual = None
     print("🔒 Sesión cerrada. Volviendo al menú principal.")
 
+def pasar_premium():
+    global token_actual
+    headers = {'Authoritazion': f'Bearer {token_actual}'}
+    response = requests.post(f'{URL}/premium', headers=headers)
+
+    try:
+        print(response.json().get('mensaje', 'Error desconocido'))
+    except Exception:
+        print('Error al procesar respuesta', response.text)
+
+def ver_carrito():
+    global token_actual
+    headers = {'Authorization': f'Bearer {token_actual}'}
+    response = requests.get(f'{URL}/carrito', headers=headers)
+
+    try:
+        datos = response.json()
+        carrito = datos.get('carrito', [])
+        if not carrito:
+            print("🛒 El carrito está vacío.")
+        else:
+            print("🛒 Productos en tu carrito:")
+            for producto in carrito:
+                print(f"- {producto['nombre']} (${producto['precio']})")
+    except Exception:
+        print("Error al leer la respuesta del servidor.")
+
 def menu_usuario_autenticado():
     while True:
         print("\n=== MENÚ DE USUARIO AUTENTICADO ===")
@@ -54,6 +81,12 @@ def menu_usuario_autenticado():
         print("9. Cerrar sesión")
 
         opcion = input("Seleccione una opción (1-9): ")
+
+        if opcion == '1':
+            pasar_premium()
+
+        if opcion == '2':
+            ver_carrito()
 
         if opcion == '9':
             cerrar_sesion()
