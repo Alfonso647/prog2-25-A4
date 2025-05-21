@@ -116,9 +116,11 @@ def main():
 
                 elif opc_car == 2:
                     #He modificado esta parte para agregar la funcionalidad de generar factura
-                    factura=client.finalizar_compra()
-                    if factura == 's':
-                        generar_factura(client.carrito)
+                    #factura=client.finalizar_compra()
+                    #if factura == 's':
+                        #generar_factura(client.carrito)
+                    print('facutra')
+
 
                 else:
                     print('Has salido del carrito')
