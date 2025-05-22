@@ -35,7 +35,7 @@ def iniciar_sesion():
     if respuesta.status_code == 200:
         token_actual = datos['token']
         print("✅ Sesión iniciada con éxito.")
-        client=Cliente(nombre,contraseña)
+        client=Cliente(nombre, contraseña)
         menu_usuario_autenticado(client)
     else:
         print("❌ Error:", datos.get('mensaje', 'Credenciales incorrectas'))
