@@ -10,18 +10,7 @@ db = SQLAlchemy(app)
 class Usuario(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     nombre_usuario = db.Column(db.String(80), unique=True, nullable=False)
-    contrasenya = db.Column(db.String(120), nullable=False)
-
-class Producto(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    nombre = db.Column(db.String(100), nullable=False)
-    precio = db.Column(db.Float, nullable=False)
-    descripcion = db.Column(db.String(200))
-
-class Carrito(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    usuario_id = db.Column(db.Integer, db.ForeignKey('usuario.id'), nullable=False)
-    productos = db.relationship('Producto', secondary=carrito_productos, backref='carritos')
+    contraseña = db.Column(db.String(120), nullable=False)
 
 with app.app_context():
     db.create_all()

@@ -11,7 +11,7 @@ class Cliente(Persona):
     Representa un cliente del sistema con funcionalidades
     de compra, venta y reseñas.
     """
-
+    resenyas_realizadas = []
     def __init__(self, nombre: str, contrasenya: str, saldo: float = 0.0):
         super().__init__(nombre, contrasenya,saldo)
         self.saldo = saldo
@@ -19,7 +19,7 @@ class Cliente(Persona):
         self.historial_compras = {}
         self.carrito = Carrito(f'Carrito de {self.nombre}')
         self.productos_en_venta = []
-        self.resenyas_realizadas = []
+        #self.resenyas_realizadas = []
 
     def __str__(self) -> str:
         return f'Usuario: {self.nombre}, saldo: {self.saldo}€'
@@ -93,7 +93,7 @@ class Cliente(Persona):
                 raise ValueError("La puntuación debe estar entre 0 y 10.")
             resenya = Resenya(self.nombre, puntuacion, comentario)
             producto.anyadir_resenya(self.nombre, puntuacion, comentario)
-            self.resenyas_realizadas.append(resenya)
+            type(self).resenyas_realizadas.append(resenya)
             print("Reseña añadida con éxito.")
         except Exception as e:
             print(f"Error al añadir reseña: {e}")
@@ -118,9 +118,9 @@ class Cliente(Persona):
 
     def mostrar_resenyas_realizadas(self):
         """Muestra todas las reseñas escritas por el cliente."""
-        if not self.resenyas_realizadas:
+        if not type(self).resenyas_realizadas:
             print("No has escrito ninguna reseña todavía.")
         else:
             print("Tus reseñas:")
-            for resenya in self.resenyas_realizadas:
+            for resenya in type(self).resenyas_ralizadas:
                 print("-", resenya)
