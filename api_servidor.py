@@ -1,3 +1,4 @@
+#Importación de librerías necesarias
 from flask import Flask, request, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from flask_jwt_extended import (
@@ -5,29 +6,46 @@ from flask_jwt_extended import (
 )
 from werkzeug.security import generate_password_hash, check_password_hash
 
-# Configuración de la app
+#Configuración principal de la aplicación Flask
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///base_de_datos.db'
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-app.config['JWT_SECRET_KEY'] = 'clave_super_secreta'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///base_de_datos.db'  #Ruta del archivo de base de datos SQLite
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False  #Desactiva el seguimiento de cambios innecesario
+app.config['JWT_SECRET_KEY'] = 'clave_super_secreta'  #Clave secreta para firmar los tokens JWT
 
-# Inicialización
+#Inicialización de la base de datos y el gestor JWT
 db = SQLAlchemy(app)
 jwt = JWTManager(app)
 
-# Modelo de usuario
 class Usuario(db.Model):
+    """
+    Clase que representa a un usuario en la base de datos.
+
+    Attributes
+    ----------
+    id : int
+        Identificador único del usuario (clave primaria).
+    nombre_usuario : str
+        Nombre de usuario único utilizado para iniciar sesión.
+    contraseña : str
+        Contraseña cifrada del usuario.
+    """
     id = db.Column(db.Integer, primary_key=True)
     nombre_usuario = db.Column(db.String(80), unique=True, nullable=False)
     contraseña = db.Column(db.String(120), nullable=False)
 
-# Crear base de datos al iniciar
+#Crea las tablas en la base de datos si no existen
 with app.app_context():
     db.create_all()
 
-# Ruta para registrarse
 @app.route('/registrarse', methods=['POST'])
 def registrarse():
+    """
+    Ruta para registrar un nuevo usuario.
+
+    Recibe un JSON con nombre_usuario y contraseña.
+    Valida si el usuario ya existe, y si no, lo guarda en la base de datos
+    con la contraseña cifrada.
+    """
     datos = request.get_json()
     nombre = datos.get('nombre_usuario')
     contra = datos.get('contraseña')
@@ -43,9 +61,14 @@ def registrarse():
 
     return jsonify({'mensaje': 'Usuario registrado correctamente'}), 201
 
-# Ruta para iniciar sesión y obtener token JWT
 @app.route('/iniciar_sesion', methods=['POST'])
 def iniciar_sesion():
+    """
+    Ruta para iniciar sesión y generar un token JWT.
+
+    Recibe un JSON con nombre_usuario y contraseña.
+    Verifica las credenciales, y si son correctas, genera un token JWT.
+    """
     datos = request.get_json()
     nombre = datos.get('nombre_usuario')
     contra = datos.get('contraseña')
@@ -58,14 +81,18 @@ def iniciar_sesion():
     token = create_access_token(identity=usuario.id)
     return jsonify({'mensaje': 'Inicio de sesión exitoso', 'token': token}), 200
 
-# Ruta protegida: mostrar todos los usuarios
 @app.route('/usuarios', methods=['GET'])
 @jwt_required()
 def obtener_usuarios():
+    """
+    Ruta protegida que devuelve la lista de todos los usuarios registrados.
+
+    Requiere token JWT válido en la cabecera Authorization.
+    """
     usuarios = Usuario.query.all()
     lista_usuarios = [{'id': u.id, 'nombre_usuario': u.nombre_usuario} for u in usuarios]
     return jsonify(lista_usuarios), 200
 
-# Ejecutar servidor
+#Punto de entrada de la aplicación
 if __name__ == '__main__':
     app.run(debug=True)
