@@ -6,7 +6,9 @@ def poner_producto_en_venta(cliente: Cliente, nombre: str, precio: float, stock:
                             volumen: float, peso: float, fragil: bool = False,
                             estado: str = "nuevo") -> Producto:
     """
-    Permite a un cliente publicar un nuevo producto en venta.
+
+    Permite a un cliente publicar un nuevo producto en venta
+
 
     El producto creado se añade al listado de productos en venta del cliente
     y también se registra en el catálogo global de la tienda.
@@ -34,5 +36,7 @@ def poner_producto_en_venta(cliente: Cliente, nombre: str, precio: float, stock:
     producto = Producto(nombre, precio, stock, volumen, peso, fragil, estado)
     cliente.productos_en_venta.append(producto)
     Tienda.nuevo_producto(producto)
-    print(f"Producto '{nombre}' ({estado}) publicado con éxito por {cliente.nombre_usuario}.")
+
+    #print(f"Producto '{nombre}' ({estado}) publicado con éxito por {cliente.nombre}.")
     return producto
+

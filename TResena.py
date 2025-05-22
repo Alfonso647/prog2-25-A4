@@ -1,6 +1,9 @@
+
+
 class Resenya:
     """
-    Clase que representa una reseña de un producto.
+    Clase que representa una reseña de un producto
+
 
     Atributos
     ----------
@@ -51,4 +54,6 @@ class Resenya:
 
     def __str__(self):
 
+
         return f"{self.usuario} valoró con {self.puntuacion}/10: {self.comentario}"
+

@@ -3,7 +3,9 @@ import TProducto
 
 class Tienda:
     '''
-    Clase que representa la tienda online
+
+    Clase que representa la tienda online.
+
 
     Atributos
     ---------
@@ -60,4 +62,7 @@ Tienda.nuevo_producto(TProducto.producto11)
 Tienda.nuevo_producto(TProducto.producto12)
 Tienda.nuevo_producto(TProducto.producto13)
 Tienda.nuevo_producto(TProducto.producto14)
+
 Tienda.nuevo_producto(TProducto.producto15)
+
+

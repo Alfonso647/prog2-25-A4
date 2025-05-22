@@ -22,11 +22,19 @@ class Carrito:
     calcular_total()
         calcula en total y más el envío
     vaciar_carrito()
-        vacía el carrito por completo
+
+        vacía el carrito por completo.
     '''
+
+
+
     def __init__(self,nombre):
         self.carrito = {}
         self.nombre = nombre
+
+
+
+
 
     def anyadir_producto(self, producto: Producto, cantidad: int):
         '''Añade un producto al carrito
@@ -107,7 +115,9 @@ class Carrito:
 
         envio = 0
         for producto in self.carrito.keys():
-            envio += producto.peso * 0.001 + producto.volumen * 0.001
+
+            envio += producto.peso + producto.volumen
+
 
         return total, envio
 
@@ -123,7 +133,8 @@ class Carrito:
         total, envio = self.calcular_total()
         if self.carrito != False:
             resultado += f'El total a pagar es {round(total,2)}€.\n'
-            resultado += f'El precio del envío es de {round(envio)}€'
+
+            resultado += f'El precio del envío es de {round(envio,2)}€'
         else:
             resultado += f'El carrito está vacío'
 
