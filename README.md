@@ -35,7 +35,7 @@ usando API Flask para guardar los usuarios actuales
 
 
 ## Instrucciones de instalación y ejecución
-[//]: # Instalar librerías usando el fichero requirements.txt y ejecutar example.py
+[//]: # Instalar librerías usando el fichero requirements.txt y ejecutar api.cliente.py
 
 ## Resumen de la API
 
