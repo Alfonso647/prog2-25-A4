@@ -13,7 +13,7 @@ class Cliente(Persona):
     """
 
     def __init__(self, nombre: str, contrasenya: str, saldo: float = 0.0):
-        super().__init__(nombre, contrasenya)
+        super().__init__(nombre, contrasenya,saldo)
         self.saldo = saldo
         self.cuenta_premium = False
         self.historial_compras = {}

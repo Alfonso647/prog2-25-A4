@@ -1,8 +1,6 @@
 from TTienda import Tienda
 from TCliente import Cliente
-from TProducto import Producto
-from TCarrito import Carrito
-from TVentaProducto import poner_producto_en_venta
+
 
 #from api_cliente import generar_factura
 

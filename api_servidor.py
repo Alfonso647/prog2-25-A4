@@ -19,9 +19,7 @@ jwt = JWTManager(app)
 class Usuario(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     nombre_usuario = db.Column(db.String(80), unique=True, nullable=False)
-    contrasenya = db.Column(db.String(120), nullable=False)
-    saldo = db.Column(db.Float, default=0.0)
-
+    contraseña = db.Column(db.String(120), nullable=False)
 
 # Crear base de datos al iniciar
 with app.app_context():
@@ -32,13 +30,13 @@ with app.app_context():
 def registrarse():
     datos = request.get_json()
     nombre = datos.get('nombre_usuario')
-    contra = datos.get('contrasenya')
+    contra = datos.get('contraseña')
 
     if Usuario.query.filter_by(nombre_usuario=nombre).first():
         return jsonify({'mensaje': 'El usuario ya existe'}), 400
 
-    nueva_contrasenya = generate_password_hash(contra)
-    nuevo_usuario = Usuario(nombre_usuario=nombre, contrasenya=nueva_contrasenya)
+    nueva_contraseña = generate_password_hash(contra)
+    nuevo_usuario = Usuario(nombre_usuario=nombre, contraseña=nueva_contraseña)
 
     db.session.add(nuevo_usuario)
     db.session.commit()
@@ -50,41 +48,15 @@ def registrarse():
 def iniciar_sesion():
     datos = request.get_json()
     nombre = datos.get('nombre_usuario')
-    contra = datos.get('contrasenya')
+    contra = datos.get('contraseña')
 
     usuario = Usuario.query.filter_by(nombre_usuario=nombre).first()
 
-    if not usuario or not check_password_hash(usuario.contrasenya, contra):
+    if not usuario or not check_password_hash(usuario.contraseña, contra):
         return jsonify({'mensaje': 'Nombre de usuario o contraseña incorrectos'}), 401
 
-    token = create_access_token(identity=str(usuario.id))
+    token = create_access_token(identity=usuario.id)
     return jsonify({'mensaje': 'Inicio de sesión exitoso', 'token': token}), 200
-
-@app.route('/recargar_saldo', methods=['POST'])
-@jwt_required()
-def recargar_saldo():
-
-    try:
-        datos = request.get_json()
-        cantidad = datos.get('cantidad')
-
-        if not isinstance(cantidad, (int, float)) or cantidad <= 0:
-            return jsonify({'mensaje': 'La cantidad debe ser un número mayor que 0'}), 400
-
-        usuario_id = get_jwt_identity()
-        usuario = Usuario.query.get(usuario_id)
-
-        if not usuario:
-            return jsonify({'mensaje': 'Usuario no encontrado'}), 404
-
-        usuario.saldo += cantidad
-        db.session.commit()
-
-        return jsonify({'mensaje': f'Se han añadido {cantidad}€. Saldo actual: {usuario.saldo:.2f}€'}), 200
-
-    except Exception as e:
-        return jsonify({'mensaje': f'Error interno: {str(e)}'}), 500
-
 
 # Ruta protegida: mostrar todos los usuarios
 @app.route('/usuarios', methods=['GET'])
