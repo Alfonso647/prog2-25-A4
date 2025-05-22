@@ -11,6 +11,7 @@ class Cliente(Persona):
     Representa un cliente del sistema con funcionalidades
     de compra, venta y reseñas.
     """
+
     resenyas_realizadas = []
     def __init__(self, nombre: str, contrasenya: str, saldo: float = 0.0):
         super().__init__(nombre, contrasenya,saldo)
@@ -37,11 +38,14 @@ class Cliente(Persona):
                 self.cuenta_premium = True
                 print(f'Tu cuenta ya es premium. Saldo: {self.saldo}€')
 
+
     def recargar_saldo(self, cantidad: Union[int, float]):
         """Recarga saldo del cliente si la cantidad es válida (>0)."""
         if cantidad > 0:
             self.saldo += cantidad
+
             print(f'Se han añadido {cantidad}€. Saldo total: {self.saldo}€')
+
         else:
             print('Error: La cantidad debe ser mayor que 0')
 
@@ -91,12 +95,14 @@ class Cliente(Persona):
         try:
             if not (0 <= puntuacion <= 10):
                 raise ValueError("La puntuación debe estar entre 0 y 10.")
+
             resenya = Resenya(self.nombre, puntuacion, comentario)
             producto.anyadir_resenya(self.nombre, puntuacion, comentario)
             type(self).resenyas_realizadas.append(resenya)
             print("Reseña añadida con éxito.")
         except Exception as e:
             print(f"Error al añadir reseña: {e}")
+
 
     def vender_producto(self, nombre, precio, stock, volumen, peso, estado):
         """
@@ -105,7 +111,9 @@ class Cliente(Persona):
         producto = Producto(nombre, precio, stock, volumen, peso, estado='nuevo')
         Tienda.nuevo_producto(producto)
         self.productos_en_venta.append(producto)
+
         print(f"Producto {nombre} añadido a la venta.")
+
 
     def mostrar_productos_en_venta(self):
         """Muestra todos los productos que el cliente tiene puestos a la venta."""
@@ -118,9 +126,11 @@ class Cliente(Persona):
 
     def mostrar_resenyas_realizadas(self):
         """Muestra todas las reseñas escritas por el cliente."""
+
         if not type(self).resenyas_realizadas:
             print("No has escrito ninguna reseña todavía.")
         else:
             print("Tus reseñas:")
             for resenya in type(self).resenyas_ralizadas:
                 print("-", resenya)
+

@@ -4,10 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
+
     <list default="true" id="c5d68f3e-7eb4-4b58-8087-820805a98cd2" name="Changes" comment="Se ha añadido cerrar sesión, y el menu para los usuarios que han iniciado sesión.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/api.cliente.py" beforeDir="false" afterPath="$PROJECT_DIR$/api.cliente.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/clases/TPersona.py" beforeDir="false" afterPath="$PROJECT_DIR$/clases/TPersona.py" afterDir="false" />
+
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -22,6 +24,7 @@
     </option>
   </component>
   <component name="Git.Settings">
+
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
         <entry key="$PROJECT_DIR$" value="Definitiva1ClasesExample" />
@@ -44,6 +47,7 @@
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$PROJECT_DIR$/website/main.py" root0="FORCE_HIGHLIGHTING" />
   </component>
+
   <component name="ProblemsViewState">
     <option name="selectedTabId" value="CurrentFile" />
   </component>
@@ -55,6 +59,7 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
+
   <component name="PropertiesComponent">{
   &quot;keyToString&quot;: {
     &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
@@ -144,6 +149,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+
     <configuration name="api.cliente" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="prog2-25-A4" />
       <option name="ENV_FILES" value="" />
@@ -153,11 +159,12 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
+
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <option name="IS_MODULE_SDK" value="false" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/api.cliente.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
@@ -176,7 +183,9 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
+
       <option name="SDK_NAME" value="Python 3.12" />
+
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <option name="IS_MODULE_SDK" value="false" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
@@ -191,6 +200,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+
     <configuration name="example" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="ejercicio_github" />
       <option name="ENV_FILES" value="" />
@@ -267,21 +277,26 @@
       <item itemvalue="Python.TCarrito" />
       <item itemvalue="Python.example" />
       <item itemvalue="Python.main" />
+
     </list>
     <recent_temporary>
       <list>
         <item itemvalue="Python.api.cliente" />
+
         <item itemvalue="Python.main" />
         <item itemvalue="Python.views" />
         <item itemvalue="Python.example" />
         <item itemvalue="Python.TCarrito" />
+
       </list>
     </recent_temporary>
   </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
+
         <option value="bundled-python-sdk-dfff61a61320-9cdd278e9d02-com.jetbrains.pycharm.community.sharedIndexes.bundled-PC-251.25410.159" />
+
       </set>
     </attachedChunks>
   </component>
@@ -295,6 +310,7 @@
       <updated>1744186572608</updated>
       <workItem from="1744186573873" duration="2820000" />
     </task>
+
     <task id="LOCAL-00001" summary="dwd">
       <option name="closed" value="true" />
       <created>1747851737318</created>
@@ -336,11 +352,13 @@
       <updated>1747857469821</updated>
     </task>
     <option name="localTasksCounter" value="6" />
+
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
+
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
       <map>
@@ -363,4 +381,5 @@
     <SUITE FILE_PATH="coverage/ejercicio_github$crear_db.coverage" NAME="crear_db Coverage Results" MODIFIED="1747861198196" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/ejercicio_github$example.coverage" NAME="example Coverage Results" MODIFIED="1747862070244" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/clases" />
   </component>
+
 </project>

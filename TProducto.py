@@ -1,4 +1,6 @@
+
 from TResena import Resenya
+
 
 
 class Producto:
@@ -28,9 +30,11 @@ class Producto:
     productos_stock = {}
     productos_precio = {}
 
+
     def __init__(self, nombre: str, precio: float, stock: int, volumen: float, peso: float, fragil: bool = False,
                  estado: str = "nuevo"):
         self.nombre = nombre.lower()
+
         self.precio = precio
         self.stock = stock
         self.volumen = volumen
@@ -75,7 +79,9 @@ class Producto:
         comentario : str
             Comentario textual sobre el producto.
         cliente : Cliente, optional
+
             Objeto cliente que hizo la reseña (si se desea guardar también en su historial)
+
 
        """
         try:
@@ -85,7 +91,9 @@ class Producto:
                 cliente.resenyas_realizadas.append(resenya)
             return True
         except ValueError:
+
             return print('Error. Introduce un número válido')
+
 
     def mostrar_resenyas(self):
         """
@@ -94,11 +102,15 @@ class Producto:
 
         if not self.resenyas:
             return ["Este producto no tiene reseñas aún."]
+
         return [str(r) for r in self.resenyas]  # MIRAR ESTO
+
 
     def __str__(self) -> str:
         sn = 'Sí' if self.fragil else 'No'
         return f'{self.nombre} ({self.estado}), {self.precio}€. Volumen: {self.volumen} cm³, Peso: {self.peso}g. ¿Frágil?: {sn}'
+
+
 
 
 producto1 = Producto("Drone", 1499.99, 12, 0.04, 0.9, True)
