@@ -1,3 +1,4 @@
+from carrito_prodcutos import carrito
 from flask import Flask, request, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from flask_jwt_extended import (
@@ -20,6 +21,12 @@ class Usuario(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     nombre_usuario = db.Column(db.String(80), unique=True, nullable=False)
     contraseña = db.Column(db.String(120), nullable=False)
+    premium = db.Column(db.Boolean, default = False)
+
+class Carrito(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    usuario_id = db.Column(db.Integer, db.Foreign('usuario.id'),nullable=False)
+    productos = db.relationship('Productos', secondary=carrito_productos, backref= 'carritos')
 
 # Crear base de datos al iniciar
 with app.app_context():
@@ -65,6 +72,42 @@ def obtener_usuarios():
     usuarios = Usuario.query.all()
     lista_usuarios = [{'id': u.id, 'nombre_usuario': u.nombre_usuario} for u in usuarios]
     return jsonify(lista_usuarios), 200
+
+@app.route('/premium', methods=['POST'])
+@jwt_required()
+def hacer_premium():
+    usuario_id = get_jwt_identity()
+    usuario = Usuario.query.get(usuario_id)
+
+    if usuario is None:
+        return jsonify(({'mensaje': 'Usuario no encontrado'})), 404
+
+    if usuario.premium:
+        return jsonify(({'mensaje': 'Ya eres usuario premium'})), 200
+
+    usuario.premium = True
+    db.session.commit()
+    return jsonify({'mensaje': 'Ahora eres usuario premium'})
+
+@app.route('/carrito', methods = ['GET'])
+@jwt_required()
+def mostrar_carrito():
+    usuario_id = get_jwt_identity()
+    carrito = Carrito.query.filter_by(usuario_id = usuario_id).first()
+
+    if not carrito or not carrito.productos:
+        return jsonify({'carrito:'[], 'mensaje': 'El carrito está vacío'})
+
+    productos = [{
+        'id': p.id,
+        'nombre': p.nombre,
+        'precio': p.precio,
+        'descripción': p.descripcion
+    } for p in carrito.productos]
+
+    return jsonify({'carrito': productos})
+
+
 
 # Ejecutar servidor
 if __name__ == '__main__':
